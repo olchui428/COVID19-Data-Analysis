@@ -1,0 +1,1788 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Controller.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">deCOVID</a> &gt; <a href="index.source.html" class="el_package">comp3111.covid</a> &gt; <span class="el_source">Controller.java</span></div><h1>Controller.java</h1><pre class="source lang-java linenums">package comp3111.covid;
+
+import java.io.*;
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.ResourceBundle;
+import java.awt.Desktop;
+import java.awt.desktop.*;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.chart.Axis;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.CustomMenuItem;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
+
+import java.time.temporal.ChronoUnit;
+
+<span class="nc" id="L43">public class Controller implements Initializable{</span>
+	
+<span class="nc" id="L45">    private String dataset = &quot;COVID_Dataset_v1.0.csv&quot;;</span>
+<span class="nc" id="L46">    private String dataset_Countries = &quot;CountryList.csv&quot;;</span>
+<span class="nc" id="L47">	private String[] countryList = DataAnalysis.getCountryList(dataset_Countries, 0);</span>
+<span class="nc" id="L48">	private int numCountries = countryList.length;</span>
+    private LineChart newlinechartA2;
+    private LineChart newlinechartB2;
+    private LineChart newlinechartC2;
+
+    @FXML
+    private AnchorPane anchorA2;    
+    
+    @FXML
+    private AnchorPane anchorB2;
+
+    @FXML
+    private AnchorPane anchorC2;
+    
+    @FXML
+    private LineChart&lt;Number, Number&gt; chartB2;
+
+    @FXML
+    private Button buttonConfirmedCases;
+
+    @FXML
+    private Button buttonConfirmedDeaths;
+
+    @FXML
+    private Button buttonRateOfVaccination;
+
+    @FXML
+    private Button buttonShowResultA1;
+    
+    @FXML
+    private Button buttonClearA1;
+    
+    @FXML
+    private Button buttonClearA2;
+
+    @FXML
+    private Button dowloaddataA1;
+    
+    @FXML
+    private Button buttonClearB1;
+
+    @FXML
+    private Button dowloaddataB1;
+    
+    @FXML
+    private Button buttonClearB2;
+    
+    @FXML
+    private Button buttonShowResultA2;
+
+    @FXML
+    private Button buttonShowResultB1;
+
+    @FXML
+    private Button buttonShowResultB2;
+    
+    @FXML
+    private Button dowloaddataA2;
+    
+    @FXML
+    private Button dowloaddataB2;
+
+    @FXML
+    private Button buttonShowResultC1;
+
+    @FXML
+    private Button buttonShowResultC2;
+    
+    @FXML
+    private Button dowloaddataC2;
+    
+    @FXML
+    private DatePicker datepickerA1;
+    
+    @FXML
+    private DatePicker startingdatepickerA2;
+    
+    @FXML
+    private DatePicker endingdatepickerA2; 
+    
+    @FXML
+    private LineChart&lt;String, Number&gt; chartA2;
+    
+    @FXML
+    private DatePicker datepickerB1;
+    
+    @FXML
+    private DatePicker datepickerC1;
+    
+    @FXML
+    private DatePicker datepickerStartB2;
+    
+    @FXML
+    private DatePicker datepickerEndB2;
+    
+    @FXML
+    private DatePicker datepickerStartC2;
+    
+    @FXML
+    private DatePicker datepickerEndC2;
+    
+    @FXML
+    private MenuButton menubuttonCountryA1;
+
+    @FXML
+    private MenuButton menubuttonCountryA2;
+
+    @FXML
+    private MenuButton menubuttonCountryB2;
+
+    @FXML
+    private MenuButton menubuttonCountryB1;
+
+    @FXML
+    private MenuButton menubuttonCountryC1;
+
+    @FXML
+    private MenuButton menubuttonCountryC2;
+
+    @FXML
+    private Tab tabApp1;
+
+    @FXML
+    private Tab tabApp2;
+
+    @FXML
+    private Tab tabApp3;
+
+    @FXML
+    private Tab tabReport1;
+
+    @FXML
+    private Tab tabReport2;
+
+    @FXML
+    private Tab tabReport3;
+
+    @FXML
+    private Tab tabTaskZero;
+    
+    @FXML
+    private TableView&lt;cases&gt; tableA1;
+
+    @FXML
+    private TableView&lt;deaths&gt; tableB1;
+    
+    @FXML
+    private TableView&lt;vaccinations&gt; tableC1;
+
+    @FXML
+    private TextArea textAreaConsole;
+
+    @FXML
+    private TextField textfieldDataset;
+
+    @FXML
+    private TextField textfieldDateA1;
+
+    @FXML
+    private TextField textfieldDateB1;
+
+    @FXML
+    private TextField textfieldDateC1;
+
+    @FXML
+    private TextField textfieldEndDateC2;
+
+    @FXML
+    private TextField textfieldEndingDateA2;
+
+    @FXML
+    private TextField textfieldISO;
+
+    @FXML
+    private TextField textfieldStartingDateA2;
+
+    @FXML
+    private TableColumn&lt;cases, String&gt; CountryColA1;
+    
+    @FXML
+    private TableColumn&lt;cases, String&gt; totalCasesColA1;
+
+    @FXML
+    private TableColumn&lt;cases, String&gt; totalCasesPer1MColA1;
+    
+    @FXML
+    private TableColumn&lt;deaths, String&gt; CountryColB1;
+
+    @FXML
+    private TableColumn&lt;deaths, String&gt; totalDeathsColB1;
+
+    @FXML
+    private TableColumn&lt;deaths, String&gt; totalDeathsPer1MColB1;
+    
+    @FXML
+    private TableColumn&lt;vaccinations, String&gt; CountryColC1;
+
+    @FXML
+    private TableColumn&lt;vaccinations, String&gt; totalFullyVacColC1;
+
+    @FXML
+    private TableColumn&lt;vaccinations, String&gt; totalFullyVacPer100ColC1;
+    
+    @FXML
+    private NumberAxis yaxisB2;
+    
+    @FXML
+    private Text TableDateA1;
+    
+    @FXML
+    private Text TableDateB1;
+    
+    @FXML
+    private Text TableDateC1;
+    
+<span class="nc" id="L263">    @FXML</span>
+    private CheckBox[] CountriesA2 = new CheckBox[numCountries];
+
+    @FXML
+    private TableColumn&lt;vaccinations, String&gt; totalFullyVacC1;
+
+    @FXML
+    private TableColumn&lt;vaccinations, String&gt; totalFullyVacPer100C1;
+    
+    @FXML
+    private Text DateErrorMsgA1;
+    
+    @FXML
+    private Text CountryErrorMsgA1;
+
+    @FXML
+    private Text StartDateErrorMsgA2;
+    
+    @FXML
+    private Text EndDateErrorMsgA2;
+    
+    @FXML
+    private Text CountryErrorMsgA2;
+    
+    @FXML
+    private Text ErrorMsgA2;
+    
+    @FXML
+    private Text DateErrorMsgB1;
+    
+    @FXML
+    private Text CountryErrorMsgB1;
+    
+    @FXML
+    private Text StartDateErrorMsgB2;
+    
+    @FXML
+    private Text EndDateErrorMsgB2;
+    
+    @FXML
+    private Text CountryErrorMsgB2;
+    
+    @FXML
+    private Text ErrorMsgB2;
+    
+    @FXML
+    private Text DateErrorMsgC1;
+    
+    @FXML
+    private Text CountryErrorMsgC1;
+    
+    @FXML
+    private Text StartDateErrorMsgC2;
+    
+    @FXML
+    private Text EndDateErrorMsgC2;
+    
+    @FXML
+    private Text CountryErrorMsgC2;
+    
+    @FXML
+    private Text ErrorMsgC2;
+    
+<span class="nc" id="L326">    @FXML</span>
+    private CheckBox[] CountriesA1 = new CheckBox[numCountries];
+    
+<span class="nc" id="L329">    @FXML</span>
+    private CheckBox[] CountriesB1 = new CheckBox[numCountries];
+    
+<span class="nc" id="L332">    @FXML</span>
+    private CheckBox[] CountriesB2 = new CheckBox[numCountries];
+    
+<span class="nc" id="L335">    @FXML</span>
+    private CheckBox[] CountriesC1 = new CheckBox[numCountries];
+    
+<span class="nc" id="L338">    @FXML</span>
+    private CheckBox[] CountriesC2 = new CheckBox[numCountries];
+    
+    @FXML
+    private VBox vboxTest;  
+               
+
+    public static class cases {
+<span class="nc" id="L346">    	private String Country = &quot;&quot;;</span>
+<span class="nc" id="L347">    	private String totalCases = &quot;&quot;;</span>
+<span class="nc" id="L348">    	private String totalCasesPer1M = &quot;&quot;;</span>
+    	
+<span class="nc" id="L350">    	private cases(String realCountry, String realTotalCases, String realTotalCasesPer1M) {</span>
+<span class="nc" id="L351">    		this.Country = realCountry;</span>
+<span class="nc" id="L352">    		this.totalCases = realTotalCases;</span>
+<span class="nc" id="L353">    		this.totalCasesPer1M = realTotalCasesPer1M;</span>
+<span class="nc" id="L354">    	}</span>
+    	
+    	public String getCountry() {
+<span class="nc" id="L357">    		return Country;</span>
+    	}
+    	
+    	public void setCountry(String realCountry) {
+<span class="nc" id="L361">    		this.Country = realCountry;</span>
+<span class="nc" id="L362">    	}</span>
+    	
+    	public String getTotalCases() {
+<span class="nc" id="L365">    		return totalCases;</span>
+    	}
+    	
+    	public void setTotalCases(String realTotalCases) {
+<span class="nc" id="L369">    		this.totalCases = realTotalCases;</span>
+<span class="nc" id="L370">    	}</span>
+    	
+    	public String getTotalCasesPer1M() {
+<span class="nc" id="L373">    		return totalCasesPer1M;</span>
+    	}
+    	
+    	public void setTotalCasesPer1M(String realTotalCasesPer1M) {
+<span class="nc" id="L377">    		this.totalCasesPer1M = realTotalCasesPer1M;</span>
+<span class="nc" id="L378">    	}</span>
+    }    
+
+    public static class deaths {
+<span class="nc" id="L382">    	private String Country = &quot;&quot;;</span>
+<span class="nc" id="L383">    	private String totalDeaths = &quot;&quot;;</span>
+<span class="nc" id="L384">    	private String totalDeathsPer1M = &quot;&quot;;</span>
+    	
+<span class="nc" id="L386">    	private deaths(String realCountry, String realTotalDeaths, String realTotalDeathsPer1M) {</span>
+<span class="nc" id="L387">    		this.Country = realCountry;</span>
+<span class="nc" id="L388">    		this.totalDeaths = realTotalDeaths;</span>
+<span class="nc" id="L389">    		this.totalDeathsPer1M = realTotalDeathsPer1M;</span>
+<span class="nc" id="L390">    	}</span>
+    	
+    	public String getCountry() {
+<span class="nc" id="L393">    		return Country;</span>
+    	}
+    	
+    	public void setCountry(String realCountry) {
+<span class="nc" id="L397">    		this.Country = realCountry;</span>
+<span class="nc" id="L398">    	}</span>
+    	
+    	public String getTotalDeaths() {
+<span class="nc" id="L401">    		return totalDeaths;</span>
+    	}
+    	
+    	public void setTotalDeaths(String realTotalDeaths) {
+<span class="nc" id="L405">    		this.totalDeaths = realTotalDeaths;</span>
+<span class="nc" id="L406">    	}</span>
+    	
+    	public String getTotalDeathsPer1M() {
+<span class="nc" id="L409">    		return totalDeathsPer1M;</span>
+    	}
+    	
+    	public void setTotalDeathsPer1M(String realTotalDeathsPer1M) {
+<span class="nc" id="L413">    		this.totalDeathsPer1M = realTotalDeathsPer1M;</span>
+<span class="nc" id="L414">    	}</span>
+    }
+    
+    public static class vaccinations {
+<span class="nc" id="L418">    	private String Country = &quot;&quot;;</span>
+<span class="nc" id="L419">    	private String totalFullyVac = &quot;0&quot;;</span>
+<span class="nc" id="L420">    	private String totalFullyVacPer100 = &quot;0&quot;;</span>
+    	
+<span class="nc" id="L422">    	private vaccinations(String realCountry, long realTotalFullyVac, float realTotalFullyVacPer100) {</span>
+<span class="nc" id="L423">    		this.Country = realCountry;</span>
+<span class="nc bnc" id="L424" title="All 2 branches missed.">    		this.totalFullyVac = realTotalFullyVac == -1 ? &quot;NA&quot; : Long.toString(realTotalFullyVac);</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">    		this.totalFullyVacPer100 = realTotalFullyVacPer100 == -1 ? &quot;NA&quot; : Float.toString(realTotalFullyVacPer100);</span>
+<span class="nc" id="L426">    	}</span>
+    	
+    	public String getCountry() {
+<span class="nc" id="L429">    		return Country;</span>
+    	}
+//    	
+//    	public void setCountry(String realCountry) {
+//    		this.Country = realCountry;
+//    	}
+    	
+    	public String getTotalFullyVac() {
+<span class="nc" id="L437">    		return totalFullyVac;</span>
+    	}
+//    	
+//    	public void setTotalFullyVac(long realTotalFullyVac) {
+//    		this.totalFullyVac = realTotalFullyVac;
+//    	}
+//    	
+    	public String getTotalFullyVacPer100() {
+<span class="nc" id="L445">    		return totalFullyVacPer100;</span>
+    	}
+//    	
+//    	public void setTotalFullyVacPer100(float realTotalFullyVacPer100) {
+//    		this.totalFullyVacPer100 = realTotalFullyVacPer100;
+//    	}
+    }
+    
+    @FXML
+    void doShowResultA1(ActionEvent event) {
+<span class="nc" id="L455">    	tableA1.getItems().clear();</span>
+<span class="nc" id="L456">    	DateErrorMsgA1.setText(&quot;&quot;);</span>
+<span class="nc" id="L457">    	CountryErrorMsgA1.setText(&quot;&quot;);</span>
+<span class="nc" id="L458">    	TableDateA1.setText(&quot;Number of Confirmed COVID-19 Cases&quot;);</span>
+<span class="nc" id="L459">    	int numSelected = 0;</span>
+    	
+<span class="nc bnc" id="L461" title="All 2 branches missed.">    	for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L462" title="All 2 branches missed.">    		if (CountriesA1[i].isSelected()) {</span>
+<span class="nc" id="L463">    			numSelected++;</span>
+    		}
+    	}
+
+<span class="nc bnc" id="L467" title="All 2 branches missed.">    	if (datepickerA1.getValue() == null) {</span>
+<span class="nc" id="L468">    		DateErrorMsgA1.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+        	
+<span class="nc bnc" id="L470" title="All 2 branches missed.">        	if (numSelected == 0)</span>
+<span class="nc" id="L471">        		CountryErrorMsgA1.setText(&quot;Please pick at least one country.&quot;);</span>
+        		
+<span class="nc" id="L473">        	return;</span>
+    	}
+
+<span class="nc" id="L476">    	LocalDate inputtedDate = datepickerA1.getValue();</span>
+    	
+<span class="nc bnc" id="L478" title="All 2 branches missed.">		if (numSelected == 0) {</span>
+<span class="nc" id="L479">			CountryErrorMsgA1.setText(&quot;Please pick at least one country.&quot;);</span>
+<span class="nc" id="L480">			return;</span>
+		}
+    	
+<span class="nc" id="L483">		String date = inputtedDate.format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+		
+<span class="nc bnc" id="L485" title="All 2 branches missed.">		for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L486" title="All 2 branches missed.">			if(CountriesA1[i].isSelected()) {</span>
+<span class="nc" id="L487">				long confirmedCases = DataAnalysis.getConfirmedCasesA1(dataset, CountriesA1[i].getText(), date);</span>
+<span class="nc" id="L488">				float confirmedCasesPer1M = DataAnalysis.getConfirmedCasesPer1MA1(dataset, CountriesA1[i].getText(), date);		</span>
+<span class="nc bnc" id="L489" title="All 2 branches missed.">				if (confirmedCases == -1) {</span>
+<span class="nc bnc" id="L490" title="All 2 branches missed.">					if (confirmedCasesPer1M == -1) {</span>
+<span class="nc" id="L491">						tableA1.getItems().add(new cases(CountriesA1[i].getText(), &quot;NA&quot;, &quot;NA&quot;));</span>
+					}
+					else {
+<span class="nc" id="L494">						tableA1.getItems().add(new cases(CountriesA1[i].getText(), &quot;NA&quot;, String.valueOf(confirmedCasesPer1M)));</span>
+					}
+				}
+<span class="nc bnc" id="L497" title="All 2 branches missed.">				else if(confirmedCasesPer1M == -1){</span>
+<span class="nc" id="L498">					tableA1.getItems().add(new cases(CountriesA1[i].getText(), String.valueOf(confirmedCases), &quot;NA&quot;));</span>
+				}
+				else {
+<span class="nc" id="L501">					tableA1.getItems().add(new cases(CountriesA1[i].getText(), String.valueOf(confirmedCases), String.valueOf(confirmedCasesPer1M)));</span>
+				}
+			}
+		}
+
+<span class="nc" id="L506">		TableDateA1.setText(&quot;Number of Confirmed COVID-19 Cases as of: &quot; + inputtedDate.format(DateTimeFormatter.ofPattern(&quot;d/M/yyyy&quot;)));</span>
+<span class="nc" id="L507">    }     </span>
+    
+    @FXML    
+    void clearA1(ActionEvent event) {
+<span class="nc" id="L511">    	tableA1.getItems().clear();</span>
+<span class="nc" id="L512">    	datepickerA1.setValue(null);</span>
+<span class="nc" id="L513">    	DateErrorMsgA1.setText(&quot;&quot;);</span>
+<span class="nc" id="L514">    	CountryErrorMsgA1.setText(&quot;&quot;);</span>
+<span class="nc" id="L515">    	TableDateA1.setText(&quot;Number of Confirmed COVID-19 Cases&quot;);    	</span>
+<span class="nc bnc" id="L516" title="All 2 branches missed.">        for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L517" title="All 2 branches missed.">    		if (CountriesA1[i].isSelected()) {</span>
+<span class="nc" id="L518">    			CountriesA1[i].setSelected(false);</span>
+    		}
+        }
+<span class="nc" id="L521">    }</span>
+    
+    @FXML
+    void startdownloadA1(ActionEvent event) throws Exception
+    {
+<span class="nc" id="L526">    	tableA1.getItems().clear();</span>
+<span class="nc" id="L527">    	DateErrorMsgA1.setText(&quot;&quot;);</span>
+<span class="nc" id="L528">    	CountryErrorMsgA1.setText(&quot;&quot;);</span>
+<span class="nc" id="L529">    	TableDateA1.setText(&quot;Number of Confirmed COVID-19 Cases&quot;);</span>
+<span class="nc" id="L530">    	int numSelected = 0;</span>
+<span class="nc bnc" id="L531" title="All 2 branches missed.">    	for(int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L532" title="All 2 branches missed.">    		if(CountriesA1[i].isSelected()) {</span>
+<span class="nc" id="L533">    			numSelected++;</span>
+    		}
+    	}
+<span class="nc bnc" id="L536" title="All 2 branches missed.">    	if (datepickerA1.getValue() == null) {</span>
+<span class="nc" id="L537">    		DateErrorMsgA1.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+        	
+<span class="nc bnc" id="L539" title="All 2 branches missed.">        	if (numSelected == 0)</span>
+<span class="nc" id="L540">        		CountryErrorMsgA1.setText(&quot;Please pick at least one country.&quot;);</span>
+        		
+<span class="nc" id="L542">        	return;</span>
+    	}
+    	
+<span class="nc" id="L545">    	LocalDate inputtedDate = datepickerA1.getValue();</span>
+		
+<span class="nc bnc" id="L547" title="All 2 branches missed.">		if (numSelected == 0) {</span>
+<span class="nc" id="L548">    		CountryErrorMsgA1.setText(&quot;Please pick at least one country.&quot;);</span>
+    		
+<span class="nc" id="L550">    		return;</span>
+		}
+    	
+<span class="nc" id="L553">    	String date = inputtedDate.format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc" id="L554">    	Writer writer = null;   </span>
+    	try {
+<span class="nc" id="L556">    		File file = new File (&quot;..\\ConfirmedCasesTable.csv&quot;);</span>
+<span class="nc" id="L557">    		writer = new BufferedWriter(new FileWriter(file));</span>
+<span class="nc" id="L558">    		writer.write(&quot;Country, Total Cases, Total Cases (per 1M)\n&quot;);</span>
+<span class="nc bnc" id="L559" title="All 2 branches missed.">    		for (int i = 0; i &lt; numCountries; i++){</span>
+<span class="nc bnc" id="L560" title="All 2 branches missed.">    			if (CountriesA1[i].isSelected()) {</span>
+<span class="nc" id="L561">    				String text = CountriesA1[i].getText();</span>
+<span class="nc" id="L562">    				long confirmedCases = DataAnalysis.getConfirmedCasesA1(dataset, CountriesA1[i].getText(), date);</span>
+<span class="nc" id="L563">    				float confirmedCasesPer1M = DataAnalysis.getConfirmedCasesPer1MA1(dataset, CountriesA1[i].getText(), date);</span>
+    				
+<span class="nc bnc" id="L565" title="All 2 branches missed.">    				if(confirmedCases == -1) {</span>
+<span class="nc bnc" id="L566" title="All 2 branches missed.">    					if(confirmedCasesPer1M == -1) {</span>
+<span class="nc" id="L567">    						text = text + &quot;,NA,NA\n&quot;;</span>
+    					}
+    					else {
+<span class="nc" id="L570">    						text = text + &quot;,NA,&quot; + String.valueOf(confirmedCasesPer1M) + &quot;\n&quot;;</span>
+    					}
+    				}
+<span class="nc bnc" id="L573" title="All 2 branches missed.">    				else if (confirmedCasesPer1M == -1) {</span>
+<span class="nc" id="L574">    					text = text + &quot;,&quot; + String.valueOf(confirmedCases) + &quot;,NA\n&quot;;</span>
+    				}
+    				else {
+<span class="nc" id="L577">    					text = text + &quot;,&quot; + String.valueOf(confirmedCases) + &quot;,&quot; + String.valueOf(confirmedCasesPer1M) + &quot;\n&quot;;</span>
+    				}
+    				
+<span class="nc" id="L580">    				writer.write(text);</span>
+    			}
+    		}
+<span class="nc bnc" id="L583" title="All 2 branches missed.">    		if(Desktop.isDesktopSupported()) {</span>
+<span class="nc" id="L584">        		Desktop d = Desktop.getDesktop();</span>
+<span class="nc" id="L585">        		d.open(file);   			</span>
+    		}
+    	}
+    	
+<span class="nc" id="L589">    	catch (Exception ex)</span>
+    	{
+<span class="nc" id="L591">    		ex.printStackTrace();</span>
+    	}
+        finally 
+        {
+<span class="nc" id="L595">            writer.flush();</span>
+<span class="nc" id="L596">            writer.close();</span>
+        }
+    	
+    	//writeExcel();
+<span class="nc" id="L600">    }</span>
+    
+    /*public void writeExcel() throws Exception {
+    	LocalDate inputtedDate = datepickerA1.getValue();
+    	String date = inputtedDate.format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));
+    	Writer writer = null;   	
+    	try {
+    		File file = new File (&quot;C:\\ConfirmedCasesTable.csv&quot;);
+    		writer = new BufferedWriter(new FileWriter(file));
+    		for (int i = 0; i &lt; 231; i++){
+    			if (CountriesA1[i].isSelected()) {
+    				String text = CountriesA1[i].getText() + &quot;;&quot; + DataAnalysis.getConfirmedCasesA1(&quot;COVID_Dataset_v1.0.csv&quot;, CountriesA1[i].getText(), date) + &quot;;&quot; + DataAnalysis.getConfirmedCasesPer1MA1(&quot;COVID_Dataset_v1.0.csv&quot;, CountriesA1[i].getText(), date) + &quot;\n&quot;;
+    				writer.write(text);
+    			}
+    		}
+    	}
+    	
+    	catch (Exception ex)
+    	{
+    		ex.printStackTrace();
+    	}
+        finally 
+        {
+            writer.flush();
+            writer.close();
+        }
+    }*/
+    
+    @FXML
+    void doShowResultA2 (ActionEvent event) {
+<span class="nc" id="L630">    	StartDateErrorMsgA2.setText(&quot;&quot;);</span>
+<span class="nc" id="L631">    	EndDateErrorMsgA2.setText(&quot;&quot;);</span>
+<span class="nc" id="L632">    	CountryErrorMsgA2.setText(&quot;&quot;);</span>
+<span class="nc" id="L633">    	ErrorMsgA2.setText(&quot;&quot;);</span>
+<span class="nc" id="L634">    	int numSelected = 0;</span>
+<span class="nc" id="L635">    	anchorA2.getChildren().remove(newlinechartA2);</span>
+    	
+<span class="nc bnc" id="L637" title="All 2 branches missed.">    	for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L638" title="All 2 branches missed.">    		if (CountriesA2[i].isSelected()) {</span>
+<span class="nc" id="L639">    			numSelected++;</span>
+    		}
+    	}
+    	
+<span class="nc bnc" id="L643" title="All 2 branches missed.">    	if (startingdatepickerA2.getValue() == null) {</span>
+<span class="nc" id="L644">    		StartDateErrorMsgA2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+    		
+<span class="nc bnc" id="L646" title="All 2 branches missed.">    		if (endingdatepickerA2.getValue() == null) {</span>
+<span class="nc" id="L647">    			EndDateErrorMsgA2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+    		}
+    		
+<span class="nc bnc" id="L650" title="All 2 branches missed.">    		if (numSelected == 0) {</span>
+<span class="nc" id="L651">    			CountryErrorMsgA2.setText(&quot;Please pick at least one country.&quot;);</span>
+    		}
+    		
+<span class="nc" id="L654">    		return;</span>
+    	}
+    	
+<span class="nc bnc" id="L657" title="All 2 branches missed.">		if (endingdatepickerA2.getValue() == null) {</span>
+<span class="nc" id="L658">			EndDateErrorMsgA2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+
+<span class="nc bnc" id="L660" title="All 2 branches missed.">        	if (numSelected == 0)</span>
+<span class="nc" id="L661">        		CountryErrorMsgA2.setText(&quot;Please pick at least one country.&quot;);</span>
+        		
+<span class="nc" id="L663">        	return;</span>
+		}
+		
+<span class="nc bnc" id="L666" title="All 2 branches missed.">		if (numSelected == 0) {</span>
+<span class="nc" id="L667">			CountryErrorMsgA2.setText(&quot;Please pick at least one country.&quot;);</span>
+<span class="nc" id="L668">			return;</span>
+		}
+		
+<span class="nc" id="L671">    	String startingDate = startingdatepickerA2.getValue().format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc" id="L672">    	String endingDate = endingdatepickerA2.getValue().format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc" id="L673">    	int numRecord = 0;</span>
+<span class="nc" id="L674">		boolean missing = false;</span>
+<span class="nc" id="L675">		numRecord = DataAnalysis.getTotalNumRecord(&quot;COVID_Dataset_v1.0.csv&quot;, startingDate, endingDate);</span>
+<span class="nc" id="L676">		String[] dateList = DataAnalysis.getDateList(&quot;COVID_Dataset_v1.0.csv&quot;, startingDate, endingDate, numRecord);</span>
+<span class="nc" id="L677">    	CategoryAxis xAxis = new CategoryAxis();</span>
+<span class="nc" id="L678">    	xAxis.setCategories(FXCollections.&lt;String&gt;observableArrayList(Arrays.asList(dateList))); </span>
+<span class="nc" id="L679">    	xAxis.setAutoRanging(false);</span>
+<span class="nc" id="L680">    	NumberAxis yAxis = new NumberAxis();</span>
+    	
+
+<span class="nc" id="L683">    	newlinechartA2 = new LineChart&lt;String, Number&gt;(xAxis, yAxis);</span>
+<span class="nc" id="L684">		newlinechartA2.setTitle(&quot;Cumulative Confirmed COVID-19 Cases (per 1M)&quot;);</span>
+<span class="nc" id="L685">    	newlinechartA2.setLayoutX(33);</span>
+<span class="nc" id="L686">    	newlinechartA2.setLayoutY(254);</span>
+<span class="nc" id="L687">    	newlinechartA2.setPrefHeight(316.0);</span>
+<span class="nc" id="L688">    	newlinechartA2.setPrefWidth(625.0);</span>
+<span class="nc" id="L689">    	newlinechartA2.setCreateSymbols(false);</span>
+<span class="nc" id="L690">    	anchorA2.getChildren().add(newlinechartA2);</span>
+    	
+<span class="nc bnc" id="L692" title="All 2 branches missed.">    	for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L693" title="All 2 branches missed.">    		if (CountriesA2[i].isSelected()) {</span>
+<span class="nc" id="L694">    			XYChart.Series&lt;String, Number&gt; series = new XYChart.Series&lt;String, Number&gt;();</span>
+<span class="nc" id="L695">    			float[] dataList = DataAnalysis.getDataList(dataset, CountriesA2[i].getText(), startingdatepickerA2.getValue(), endingdatepickerA2.getValue(), numRecord, &quot;total_cases_per_million&quot;);</span>
+    			
+<span class="nc bnc" id="L697" title="All 2 branches missed.">    			for (int j = 0; j &lt; numRecord; j++) {</span>
+    				
+<span class="nc bnc" id="L699" title="All 2 branches missed.">    				if (dataList[j] == -1.0) {</span>
+<span class="nc" id="L700">    					missing = true;</span>
+    				}
+    				else
+<span class="nc" id="L703">    					series.getData().add(new XYChart.Data&lt;String, Number&gt;(dateList[j], dataList[j]));</span>
+    			}  
+    			
+<span class="nc" id="L706">    			series.setName(CountriesA2[i].getText());</span>
+
+<span class="nc" id="L708">    	    	newlinechartA2.getData().add(series);</span>
+<span class="nc bnc" id="L709" title="All 2 branches missed.">    	    	if (missing == true) {</span>
+<span class="nc" id="L710">    	    		ErrorMsgA2.setText(&quot;If a country/region line is missing, there is no data for selected range.&quot;);</span>
+    	    	}
+    		}
+    	}    	
+		
+<span class="nc" id="L715">    }</span>
+    
+    @FXML
+    void startdownloadA2(ActionEvent event) throws Exception
+    {
+<span class="nc" id="L720">    	StartDateErrorMsgA2.setText(&quot;&quot;);</span>
+<span class="nc" id="L721">    	EndDateErrorMsgA2.setText(&quot;&quot;);</span>
+<span class="nc" id="L722">    	CountryErrorMsgA2.setText(&quot;&quot;);</span>
+<span class="nc" id="L723">    	ErrorMsgA2.setText(&quot;&quot;);</span>
+<span class="nc" id="L724">    	int numSelected = 0;</span>
+<span class="nc" id="L725">    	anchorA2.getChildren().remove(newlinechartA2);</span>
+
+<span class="nc bnc" id="L727" title="All 2 branches missed.">    	for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L728" title="All 2 branches missed.">    		if (CountriesA2[i].isSelected()) {</span>
+<span class="nc" id="L729">    			numSelected++;</span>
+    		}
+    	}
+    	
+<span class="nc bnc" id="L733" title="All 2 branches missed.">    	if (startingdatepickerA2.getValue() == null) {</span>
+<span class="nc" id="L734">    		StartDateErrorMsgA2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+    		
+<span class="nc bnc" id="L736" title="All 2 branches missed.">    		if (endingdatepickerA2.getValue() == null) {</span>
+<span class="nc" id="L737">    			EndDateErrorMsgA2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+    		}
+    		
+<span class="nc bnc" id="L740" title="All 2 branches missed.">    		if (numSelected == 0) {</span>
+<span class="nc" id="L741">    			CountryErrorMsgA2.setText(&quot;Please pick at least one country.&quot;);</span>
+    		}
+    		
+<span class="nc" id="L744">    		return;</span>
+    	}
+    	
+<span class="nc bnc" id="L747" title="All 2 branches missed.">		if (endingdatepickerA2.getValue() == null) {</span>
+<span class="nc" id="L748">			EndDateErrorMsgA2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+
+<span class="nc bnc" id="L750" title="All 2 branches missed.">        	if (numSelected == 0)</span>
+<span class="nc" id="L751">        		CountryErrorMsgA2.setText(&quot;Please pick at least one country.&quot;);</span>
+        		
+<span class="nc" id="L753">        	return;</span>
+		}
+		
+<span class="nc bnc" id="L756" title="All 2 branches missed.">		if (numSelected == 0) {</span>
+<span class="nc" id="L757">			CountryErrorMsgA2.setText(&quot;Please pick at least one country.&quot;);</span>
+<span class="nc" id="L758">			return;</span>
+		}
+    	
+<span class="nc" id="L761">    	String startingDate = startingdatepickerA2.getValue().format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc" id="L762">    	String endingDate = endingdatepickerA2.getValue().format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc" id="L763">    	int numRecord = 0;</span>
+<span class="nc" id="L764">		numRecord = DataAnalysis.getTotalNumRecord(&quot;COVID_Dataset_v1.0.csv&quot;, startingDate, endingDate);</span>
+<span class="nc" id="L765">		String[] dateList = DataAnalysis.getDateList(&quot;COVID_Dataset_v1.0.csv&quot;, startingDate, endingDate, numRecord);</span>
+<span class="nc" id="L766">    	Writer writer = null;</span>
+
+    	try {
+<span class="nc" id="L769">    		File file = new File (&quot;..\\CumulativeConfirmedCasesPer1M.csv&quot;);</span>
+<span class="nc" id="L770">    		writer = new BufferedWriter(new FileWriter(file));</span>
+<span class="nc" id="L771">    		writer.write(&quot;Country,Date,Cumulative Cases (per 1M)\n&quot;);</span>
+<span class="nc bnc" id="L772" title="All 2 branches missed.">    		for (int i = 0; i &lt; numCountries; i++){</span>
+<span class="nc bnc" id="L773" title="All 2 branches missed.">	    		if (CountriesA2[i].isSelected()) {</span>
+<span class="nc" id="L774">	    			float[] dataList = DataAnalysis.getDataList(dataset, CountriesA2[i].getText(), startingdatepickerA2.getValue(), endingdatepickerA2.getValue(), numRecord, &quot;total_cases_per_million&quot;);</span>
+<span class="nc bnc" id="L775" title="All 2 branches missed.">	    			for (int j = 0; j &lt; numRecord; j++) {</span>
+<span class="nc" id="L776">	    				String text = CountriesA2[i].getText();</span>
+<span class="nc" id="L777">	    				text = text + &quot;,&quot; + dateList[j];</span>
+	    				
+<span class="nc bnc" id="L779" title="All 2 branches missed.">	    				if (dataList[j] != -1.0) {</span>
+<span class="nc" id="L780">	    					text = text + &quot;,&quot; + dataList[j] + &quot;\n&quot;;</span>
+	    				}
+	    				else
+<span class="nc" id="L783">	    					text = text + &quot;,NA\n&quot;;</span>
+	    				
+<span class="nc" id="L785">	    				writer.write(text);</span>
+	    			}  		
+	    		}
+    		}
+<span class="nc bnc" id="L789" title="All 2 branches missed.">    		if(Desktop.isDesktopSupported()) {</span>
+<span class="nc" id="L790">        		Desktop d = Desktop.getDesktop();</span>
+<span class="nc" id="L791">        		d.open(file);   			</span>
+    		}
+    	}
+    	
+<span class="nc" id="L795">    	catch (Exception ex)</span>
+    	{
+<span class="nc" id="L797">    		ex.printStackTrace();</span>
+    	}
+        finally 
+        {
+<span class="nc" id="L801">            writer.flush();</span>
+<span class="nc" id="L802">            writer.close();</span>
+        }
+    	
+    	//writeExcel();
+<span class="nc" id="L806">    }</span>
+    
+    @FXML    
+    void clearA2(ActionEvent event) {
+<span class="nc" id="L810">    	startingdatepickerA2.setValue(null);</span>
+<span class="nc" id="L811">    	endingdatepickerA2.setValue(null);</span>
+<span class="nc" id="L812">    	CountryErrorMsgA2.setText(&quot;&quot;);</span>
+<span class="nc" id="L813">    	StartDateErrorMsgA2.setText(&quot;&quot;);</span>
+<span class="nc" id="L814">    	EndDateErrorMsgA2.setText(&quot;&quot;);</span>
+<span class="nc" id="L815">    	ErrorMsgA2.setText(&quot;&quot;);</span>
+<span class="nc bnc" id="L816" title="All 2 branches missed.">        for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L817" title="All 2 branches missed.">    		  if (CountriesA2[i].isSelected()) {</span>
+<span class="nc" id="L818">    			  CountriesA2[i].setSelected(false);</span>
+          }
+        }
+<span class="nc" id="L821">        anchorA2.getChildren().remove(newlinechartA2);</span>
+<span class="nc bnc" id="L822" title="All 2 branches missed.">    	if (newlinechartA2 != null)</span>
+<span class="nc" id="L823">    		newlinechartA2.getData().clear();</span>
+<span class="nc" id="L824">    }</span>
+    
+    
+    /*void startdownloadA (ActionEvent event){
+    
+    	LocalDate startinginputtedDate = startingdatepickerA2.getValue();
+    	String startingDate = startinginputtedDate.format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));
+    	
+    	LocalDate endinginputtedDate = endingdatepickerA2.getValue();
+    	String endingDate = endinginputtedDate.format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));
+
+		int numRecord = 0;
+		numRecord = DataAnalysis.getTotalNumRecord(&quot;COVID_Dataset_v1.0.csv&quot;, startingDate, endingDate);
+		String[] dateList = DataAnalysis.getDateList(&quot;COVID_Dataset_v1.0.csv&quot;, startingDate, endingDate, numRecord);
+
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel(&quot;Date&quot;);
+        yAxis.setLabel(&quot;Confrimed COVID-19 Cases&quot;);
+        LineChart&lt;String, Number&gt; lineChart = new LineChart&lt;String, Number&gt; (xAxis, yAxis);		
+		
+		//XYChart.Series&lt;String, Number&gt; imageseries = new XYChart.Series&lt;String, Number&gt;();
+    	for (int i = 0; i &lt; 231; i++) {
+    		if (CountriesA2[i].isSelected()) {
+    			XYChart.Series&lt;String, Number&gt; series = new XYChart.Series&lt;String, Number&gt;();
+    			//int numRecord = 0;
+    			//numRecord = DataAnalysis.getTotalNumRecord(&quot;COVID_Dataset_v1.0.csv&quot;, startingDate, endingDate);
+    			//String[] dateList = DataAnalysis.getDateList(&quot;COVID_Dataset_v1.0.csv&quot;, startingDate, endingDate, numRecord);
+    			for (int j = 0; j &lt; numRecord; j++) {
+    				series.getData().add(new XYChart.Data&lt;String, Number&gt;(dateList[j], DataAnalysis.getConfirmedCasesPer1MA1(&quot;COVID_Dataset_v1.0.csv&quot;, CountriesA2[i].getText(), 
+    						dateList[j])));
+    			}
+    			series.setName(CountriesA2[i].getText());
+    	    	lineChart.getData().add(series);
+    		}
+    	}
+
+        lineChart.setAnimated(false);
+        Scene scene = new Scene(lineChart, 800, 600);
+        saveAsPng(scene, &quot;c:\\temp\\chart.png&quot;);
+        
+    }
+       
+    public void saveAsPng(Scene scene, String path) {
+        WritableImage image = scene.snapshot(null);
+        File file = new File(path);
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), &quot;png&quot;, file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
+    
+    @FXML
+    void doShowResultB1(ActionEvent event) {
+<span class="nc" id="L879">    	tableB1.getItems().clear();</span>
+<span class="nc" id="L880">    	DateErrorMsgB1.setText(&quot;&quot;);</span>
+<span class="nc" id="L881">    	CountryErrorMsgB1.setText(&quot;&quot;);</span>
+<span class="nc" id="L882">    	TableDateB1.setText(&quot;Number of Confirmed COVID-19 Deaths&quot;);</span>
+<span class="nc" id="L883">    	int numSelected = 0;</span>
+<span class="nc bnc" id="L884" title="All 2 branches missed.">    	for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L885" title="All 2 branches missed.">    		if (CountriesB1[i].isSelected()) {</span>
+<span class="nc" id="L886">    			numSelected++;</span>
+    		}
+    	}
+<span class="nc bnc" id="L889" title="All 2 branches missed.">    	if (datepickerB1.getValue() == null) {</span>
+<span class="nc" id="L890">    		DateErrorMsgB1.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+
+<span class="nc bnc" id="L892" title="All 2 branches missed.">        	if (numSelected == 0)</span>
+<span class="nc" id="L893">        		CountryErrorMsgB1.setText(&quot;Please pick at least one country.&quot;);</span>
+        		
+<span class="nc" id="L895">        	return;</span>
+    	}
+    	
+<span class="nc" id="L898">    	LocalDate inputtedDate = datepickerB1.getValue();</span>
+		
+<span class="nc bnc" id="L900" title="All 2 branches missed.">		if (numSelected == 0) {</span>
+<span class="nc" id="L901">			CountryErrorMsgB1.setText(&quot;Please pick at least one country.&quot;);</span>
+<span class="nc" id="L902">			return;</span>
+		}
+
+    	
+<span class="nc" id="L906">    	String date = inputtedDate.format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc bnc" id="L907" title="All 2 branches missed.">    	for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L908" title="All 2 branches missed.">    		if (CountriesB1[i].isSelected()) {</span>
+<span class="nc" id="L909">    			long confirmedDeaths = DataAnalysis.getConfirmedDeaths(dataset, CountriesB1[i].getText(), date);</span>
+<span class="nc" id="L910">    			float confirmedDeathsPer1M = DataAnalysis.getConfirmedDeathsPer1M(dataset, CountriesB1[i].getText(), date);</span>
+<span class="nc bnc" id="L911" title="All 2 branches missed.">    			if (confirmedDeaths == -1) {</span>
+<span class="nc bnc" id="L912" title="All 2 branches missed.">    				if (confirmedDeathsPer1M == -1) {</span>
+<span class="nc" id="L913">    					tableB1.getItems().add(new deaths(CountriesB1[i].getText(), &quot;NA&quot;, &quot;NA&quot;));</span>
+    				}
+    				else
+<span class="nc" id="L916">    					tableB1.getItems().add(new deaths(CountriesB1[i].getText(), &quot;NA&quot;, String.valueOf(confirmedDeathsPer1M)));</span>
+    			}
+<span class="nc bnc" id="L918" title="All 2 branches missed.">    			else if (confirmedDeathsPer1M == -1)</span>
+<span class="nc" id="L919">    				tableB1.getItems().add(new deaths(CountriesB1[i].getText(), String.valueOf(confirmedDeaths), &quot;NA&quot;));</span>
+    			else
+<span class="nc" id="L921">    				tableB1.getItems().add(new deaths(CountriesB1[i].getText(), String.valueOf(confirmedDeaths), String.valueOf(confirmedDeathsPer1M)));</span>
+    		}
+    	}
+    	
+<span class="nc" id="L925">    	TableDateB1.setText(&quot;Number of Confirmed COVID-19 Deaths as of &quot; + inputtedDate.format(DateTimeFormatter.ofPattern(&quot;d/M/yyyy&quot;)));</span>
+<span class="nc" id="L926">    } </span>
+    
+    @FXML    
+    void clearB1(ActionEvent event) {
+<span class="nc" id="L930">    	tableB1.getItems().clear();</span>
+<span class="nc" id="L931">    	datepickerB1.setValue(null);</span>
+<span class="nc" id="L932">    	DateErrorMsgB1.setText(&quot;&quot;);</span>
+<span class="nc" id="L933">    	CountryErrorMsgB1.setText(&quot;&quot;);</span>
+<span class="nc" id="L934">    	TableDateB1.setText(&quot;Number of Confirmed COVID-19 Deaths&quot;);</span>
+<span class="nc bnc" id="L935" title="All 2 branches missed.">        for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L936" title="All 2 branches missed.">    		if (CountriesB1[i].isSelected()) {</span>
+<span class="nc" id="L937">    			CountriesB1[i].setSelected(false);</span>
+    		}
+        }
+<span class="nc" id="L940">    }</span>
+    
+    @FXML
+    void startdownloadB1(ActionEvent event) throws Exception
+    {
+<span class="nc" id="L945">    	tableB1.getItems().clear();</span>
+<span class="nc" id="L946">    	DateErrorMsgB1.setText(&quot;&quot;);</span>
+<span class="nc" id="L947">    	CountryErrorMsgB1.setText(&quot;&quot;);</span>
+<span class="nc" id="L948">    	TableDateB1.setText(&quot;Number of Confirmed COVID-19 Deaths&quot;);</span>
+<span class="nc" id="L949">    	int numSelected = 0;</span>
+<span class="nc bnc" id="L950" title="All 2 branches missed.">    	for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L951" title="All 2 branches missed.">    		if (CountriesB1[i].isSelected()) {</span>
+<span class="nc" id="L952">    			numSelected++;</span>
+    		}
+    	}
+<span class="nc bnc" id="L955" title="All 2 branches missed.">    	if (datepickerB1.getValue() == null) {</span>
+<span class="nc" id="L956">    		DateErrorMsgB1.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+        	
+<span class="nc bnc" id="L958" title="All 2 branches missed.">        	if (numSelected == 0)</span>
+<span class="nc" id="L959">        		CountryErrorMsgB1.setText(&quot;Please pick at least one country.&quot;);</span>
+        		
+<span class="nc" id="L961">        	return;</span>
+    	}
+    	
+<span class="nc" id="L964">    	LocalDate inputtedDate = datepickerB1.getValue();</span>
+		
+<span class="nc bnc" id="L966" title="All 2 branches missed.">		if (numSelected == 0) {</span>
+<span class="nc" id="L967">    		CountryErrorMsgB1.setText(&quot;Please pick at least one country.&quot;);</span>
+    		
+<span class="nc" id="L969">    		return;</span>
+		}
+    	
+<span class="nc" id="L972">    	String date = inputtedDate.format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc" id="L973">    	Writer writer = null;</span>
+
+    	try {
+<span class="nc" id="L976">    		File file = new File (&quot;..\\ConfirmedDeathsTable.csv&quot;);</span>
+<span class="nc" id="L977">    		writer = new BufferedWriter(new FileWriter(file));</span>
+<span class="nc" id="L978">    		writer.write(&quot;Country,Total Deaths,Total Deaths (per 1M)\n&quot;);</span>
+<span class="nc bnc" id="L979" title="All 2 branches missed.">    		for (int i = 0; i &lt; numCountries; i++){</span>
+<span class="nc bnc" id="L980" title="All 2 branches missed.">    			if (CountriesB1[i].isSelected()) {</span>
+<span class="nc" id="L981">    				String text = CountriesB1[i].getText();</span>
+<span class="nc" id="L982">        			long confirmedDeaths = DataAnalysis.getConfirmedDeaths(dataset, CountriesB1[i].getText(), date);</span>
+<span class="nc" id="L983">        			float confirmedDeathsPer1M = DataAnalysis.getConfirmedDeathsPer1M(dataset, CountriesB1[i].getText(), date);</span>
+<span class="nc bnc" id="L984" title="All 2 branches missed.">        			if (confirmedDeaths == -1) {</span>
+<span class="nc bnc" id="L985" title="All 2 branches missed.">        				if (confirmedDeathsPer1M == -1) {</span>
+<span class="nc" id="L986">        					text = text + &quot;,NA,NA\n&quot;;</span>
+        				}
+        				else
+<span class="nc" id="L989">        					text = text + &quot;,NA,&quot; + String.valueOf(confirmedDeathsPer1M) + &quot;\n&quot;;</span>
+        			}
+<span class="nc bnc" id="L991" title="All 2 branches missed.">        			else if (confirmedDeathsPer1M == -1)</span>
+<span class="nc" id="L992">        				text = text + &quot;,&quot; + String.valueOf(confirmedDeaths) + &quot;,NA\n&quot;;</span>
+        			else
+<span class="nc" id="L994">        				text = text + &quot;,&quot; + String.valueOf(confirmedDeaths) + &quot;,&quot; + String.valueOf(confirmedDeathsPer1M) + &quot;\n&quot;;</span>
+				
+<span class="nc" id="L996">    				writer.write(text);</span>
+    			}
+    		}
+<span class="nc bnc" id="L999" title="All 2 branches missed.">    		if(Desktop.isDesktopSupported()) {</span>
+<span class="nc" id="L1000">        		Desktop d = Desktop.getDesktop();</span>
+<span class="nc" id="L1001">        		d.open(file);   			</span>
+    		}
+    	}
+    	
+<span class="nc" id="L1005">    	catch (Exception ex)</span>
+    	{
+<span class="nc" id="L1007">    		ex.printStackTrace();</span>
+    	}
+        finally 
+        {
+<span class="nc" id="L1011">            writer.flush();</span>
+<span class="nc" id="L1012">            writer.close();</span>
+        }
+    	
+    	//writeExcel();
+<span class="nc" id="L1016">    }</span>
+    
+    
+    @FXML
+    void doShowResultC1(ActionEvent event) {
+<span class="nc" id="L1021">    	tableC1.getItems().clear();</span>
+<span class="nc" id="L1022">    	int numSelected = 0;</span>
+<span class="nc" id="L1023">    	boolean proceed = true;</span>
+<span class="nc" id="L1024">    	LocalDate inputtedDate = datepickerC1.getValue();</span>
+    	
+//    	Check Invalid Date
+<span class="nc bnc" id="L1027" title="All 2 branches missed.">    	if (datepickerC1.getValue() == null) {</span>
+<span class="nc" id="L1028">    		DateErrorMsgC1.setText(&quot;Please pick a date.&quot;);</span>
+<span class="nc" id="L1029">    		proceed = false;</span>
+    	} else {
+<span class="nc" id="L1031">    		boolean isBefore = inputtedDate.isBefore(LocalDate.parse(&quot;2020-03-01&quot;));</span>
+<span class="nc" id="L1032">        	boolean isAfter = inputtedDate.isAfter(LocalDate.parse(&quot;2021-07-20&quot;));</span>
+<span class="nc bnc" id="L1033" title="All 4 branches missed.">    		if (isBefore == true || isAfter == true) {</span>
+<span class="nc" id="L1034">    			DateErrorMsgC1.setText(&quot;Please pick a date between 2020-03-01 and 2021-07-20.&quot;);</span>
+<span class="nc" id="L1035">    			proceed = false;</span>
+    		} else {
+<span class="nc" id="L1037">    			DateErrorMsgC1.setText(&quot;&quot;);</span>
+    		}
+    	}
+    	
+//    	Check Empty Countries
+<span class="nc bnc" id="L1042" title="All 2 branches missed.">    	for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L1043" title="All 2 branches missed.">    		if (CountriesC1[i].isSelected()) {</span>
+<span class="nc" id="L1044">    			numSelected++;</span>
+    		}
+    	}
+<span class="nc bnc" id="L1047" title="All 2 branches missed.">    	if (numSelected == 0) {</span>
+<span class="nc" id="L1048">    		CountryErrorMsgC1.setText(&quot;Please pick at least one country.&quot;);</span>
+<span class="nc" id="L1049">    		proceed = false;</span>
+    	} else {
+<span class="nc" id="L1051">    		CountryErrorMsgC1.setText(&quot;&quot;);</span>
+    	}
+    	
+//    	No invalid entries --&gt; output table
+<span class="nc bnc" id="L1055" title="All 2 branches missed.">    	if (proceed) {</span>
+<span class="nc" id="L1056">	    	String date = inputtedDate.format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc bnc" id="L1057" title="All 2 branches missed.">	    	for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L1058" title="All 2 branches missed.">	    		if (CountriesC1[i].isSelected()) {</span>
+<span class="nc" id="L1059">	    			String country = CountriesC1[i].getText();</span>
+<span class="nc" id="L1060">	    			long vac = DataAnalysis.getTotalFullyVac(dataset, country, date);</span>
+<span class="nc" id="L1061">	    			float vacRate = DataAnalysis.getTotalFullyVacPer100(dataset, country, date);</span>
+<span class="nc" id="L1062">	    			tableC1.getItems().add(new vaccinations(country, vac, vacRate));</span>
+	    		}
+	    	}
+    	}
+    	
+<span class="nc" id="L1067">    	TableDateC1.setText(&quot;Rate of Vaccination against COVID-19 &quot; + inputtedDate.format(DateTimeFormatter.ofPattern(&quot;d/M/yyyy&quot;)));</span>
+<span class="nc" id="L1068">    } </span>
+
+    @FXML
+    void clearC1(ActionEvent event) {
+<span class="nc" id="L1072">    	tableC1.getItems().clear();</span>
+<span class="nc" id="L1073">    	datepickerC1.setValue(null);</span>
+<span class="nc" id="L1074">    	DateErrorMsgC1.setText(&quot;&quot;);</span>
+<span class="nc" id="L1075">    	CountryErrorMsgC1.setText(&quot;&quot;);</span>
+<span class="nc bnc" id="L1076" title="All 2 branches missed.">        for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L1077" title="All 2 branches missed.">    		  if (CountriesC1[i].isSelected()) {</span>
+<span class="nc" id="L1078">    			  CountriesC1[i].setSelected(false);</span>
+    		  }
+        }
+<span class="nc" id="L1081">    }</span>
+    
+    @FXML
+    void startdownloadC1(ActionEvent event) throws Exception
+    {
+<span class="nc" id="L1086">    	DateErrorMsgC1.setText(&quot;&quot;);</span>
+<span class="nc" id="L1087">    	CountryErrorMsgC1.setText(&quot;&quot;);</span>
+<span class="nc" id="L1088">    	int numSelected = 0;</span>
+    	
+<span class="nc bnc" id="L1090" title="All 2 branches missed.">    	for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L1091" title="All 2 branches missed.">    		if (CountriesC1[i].isSelected()) {</span>
+<span class="nc" id="L1092">    			numSelected++;</span>
+    		}
+    	}
+    	
+<span class="nc bnc" id="L1096" title="All 2 branches missed.">    	if (datepickerC1.getValue() == null) {</span>
+<span class="nc" id="L1097">    		DateErrorMsgC1.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+    		
+<span class="nc bnc" id="L1099" title="All 2 branches missed.">        	if (numSelected == 0) {</span>
+<span class="nc" id="L1100">        		CountryErrorMsgC1.setText(&quot;Please pick at least one country.&quot;);</span>
+        	}
+        	
+<span class="nc" id="L1103">        	return;</span>
+    	}
+    	
+    	
+<span class="nc" id="L1107">    	LocalDate inputtedDate = datepickerC1.getValue();</span>
+    	
+<span class="nc" id="L1109">		boolean isBefore = inputtedDate.isBefore(LocalDate.parse(&quot;2020-03-01&quot;));</span>
+<span class="nc" id="L1110">		boolean isAfter = inputtedDate.isAfter(LocalDate.parse(&quot;2021-07-20&quot;));</span>
+    	
+<span class="nc bnc" id="L1112" title="All 4 branches missed.">		if (isBefore == true || isAfter == true) {</span>
+<span class="nc" id="L1113">			DateErrorMsgC1.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+        	
+<span class="nc bnc" id="L1115" title="All 2 branches missed.">        	if (numSelected == 0) {</span>
+<span class="nc" id="L1116">        		CountryErrorMsgC1.setText(&quot;Please pick at least one country.&quot;);</span>
+        	}
+        	
+<span class="nc" id="L1119">        	return;</span>
+		}
+
+<span class="nc bnc" id="L1122" title="All 2 branches missed.">    	if (numSelected == 0) {</span>
+<span class="nc" id="L1123">    		CountryErrorMsgC1.setText(&quot;Please pick at least one country.&quot;);</span>
+<span class="nc" id="L1124">    		return;</span>
+    	}
+    	
+<span class="nc" id="L1127">    	String date = inputtedDate.format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc" id="L1128">    	Writer writer = null;   </span>
+    	
+    	try {
+<span class="nc" id="L1131">    		File file = new File (&quot;..\\VaccinationRateTable.csv&quot;);</span>
+<span class="nc" id="L1132">    		writer = new BufferedWriter(new FileWriter(file));</span>
+<span class="nc" id="L1133">    		writer.write(&quot;Country,Fully Vaccinated,Rate of Vaccination\n&quot;);</span>
+<span class="nc bnc" id="L1134" title="All 2 branches missed.">    		for (int i = 0; i &lt; numCountries; i++){</span>
+<span class="nc bnc" id="L1135" title="All 2 branches missed.">    			if (CountriesC1[i].isSelected()) {</span>
+<span class="nc" id="L1136">    				String text = CountriesC1[i].getText();</span>
+<span class="nc" id="L1137">        			long vac = DataAnalysis.getTotalFullyVac(dataset, CountriesC1[i].getText(), date);</span>
+<span class="nc" id="L1138">        			float vacRate = DataAnalysis.getTotalFullyVacPer100(dataset, CountriesC1[i].getText(), date);</span>
+<span class="nc bnc" id="L1139" title="All 2 branches missed.">        			if (vac == -1) {</span>
+<span class="nc bnc" id="L1140" title="All 2 branches missed.">        				if (vacRate == -1) {</span>
+<span class="nc" id="L1141">        					text = text + &quot;,NA,NA\n&quot;;</span>
+        				}
+        				else
+<span class="nc" id="L1144">        					text = text + &quot;,NA,&quot; + String.valueOf(vacRate) + &quot;\n&quot;;</span>
+        			}
+<span class="nc bnc" id="L1146" title="All 2 branches missed.">        			else if (vacRate == -1)</span>
+<span class="nc" id="L1147">        				text = text + &quot;,&quot; + String.valueOf(vac) + &quot;,NA\n&quot;;</span>
+        			else
+<span class="nc" id="L1149">        				text = text + &quot;,&quot; + String.valueOf(vac) + &quot;,&quot; + String.valueOf(vacRate) + &quot;\n&quot;;</span>
+				
+<span class="nc" id="L1151">    				writer.write(text);</span>
+    			}
+    		}
+<span class="nc bnc" id="L1154" title="All 2 branches missed.">    		if(Desktop.isDesktopSupported()) {</span>
+<span class="nc" id="L1155">        		Desktop d = Desktop.getDesktop();</span>
+<span class="nc" id="L1156">        		d.open(file);   			</span>
+    		}
+    	}
+    	
+<span class="nc" id="L1160">    	catch (Exception ex)</span>
+    	{
+<span class="nc" id="L1162">    		ex.printStackTrace();</span>
+    	}
+        finally 
+        {
+<span class="nc" id="L1166">            writer.flush();</span>
+<span class="nc" id="L1167">            writer.close();</span>
+        }
+    	
+    	//writeExcel();
+<span class="nc" id="L1171">    }</span>
+
+    @FXML
+    void doShowResultB2(ActionEvent event) {
+<span class="nc" id="L1175">    	StartDateErrorMsgB2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1176">    	EndDateErrorMsgB2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1177">    	CountryErrorMsgB2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1178">    	ErrorMsgB2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1179">    	int numSelected = 0;</span>
+<span class="nc" id="L1180">    	anchorB2.getChildren().remove(newlinechartB2);</span>
+
+<span class="nc bnc" id="L1182" title="All 2 branches missed.">    	for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L1183" title="All 2 branches missed.">    		if (CountriesB2[i].isSelected()) {</span>
+<span class="nc" id="L1184">    			numSelected++;</span>
+    		}
+    	}
+    	
+<span class="nc bnc" id="L1188" title="All 2 branches missed.">    	if (datepickerStartB2.getValue() == null) {</span>
+<span class="nc" id="L1189">    		StartDateErrorMsgB2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+    		
+<span class="nc bnc" id="L1191" title="All 2 branches missed.">    		if (datepickerEndB2.getValue() == null) {</span>
+<span class="nc" id="L1192">    			EndDateErrorMsgB2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+    		}
+    		
+<span class="nc bnc" id="L1195" title="All 2 branches missed.">    		if (numSelected == 0) {</span>
+<span class="nc" id="L1196">    			CountryErrorMsgB2.setText(&quot;Please pick at least one country.&quot;);</span>
+    		}
+    		
+<span class="nc" id="L1199">    		return;</span>
+    	}
+    	
+<span class="nc bnc" id="L1202" title="All 2 branches missed.">		if (datepickerEndB2.getValue() == null) {</span>
+<span class="nc" id="L1203">			EndDateErrorMsgB2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+
+<span class="nc bnc" id="L1205" title="All 2 branches missed.">        	if (numSelected == 0)</span>
+<span class="nc" id="L1206">        		CountryErrorMsgB2.setText(&quot;Please pick at least one country.&quot;);</span>
+        		
+<span class="nc" id="L1208">        	return;</span>
+		}
+		
+<span class="nc bnc" id="L1211" title="All 2 branches missed.">		if (numSelected == 0) {</span>
+<span class="nc" id="L1212">			CountryErrorMsgB2.setText(&quot;Please pick at least one country.&quot;);</span>
+<span class="nc" id="L1213">			return;</span>
+		}
+		
+<span class="nc" id="L1216">    	String startingDate = datepickerStartB2.getValue().format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc" id="L1217">    	String endingDate = datepickerEndB2.getValue().format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc" id="L1218">    	int numRecord = 0;</span>
+<span class="nc" id="L1219">		boolean missing = false;</span>
+<span class="nc" id="L1220">		numRecord = DataAnalysis.getTotalNumRecord(&quot;COVID_Dataset_v1.0.csv&quot;, startingDate, endingDate);</span>
+<span class="nc" id="L1221">		String[] dateList = DataAnalysis.getDateList(&quot;COVID_Dataset_v1.0.csv&quot;, startingDate, endingDate, numRecord);</span>
+<span class="nc" id="L1222">    	CategoryAxis xAxis = new CategoryAxis();</span>
+<span class="nc" id="L1223">    	xAxis.setCategories(FXCollections.&lt;String&gt;observableArrayList(Arrays.asList(dateList))); </span>
+<span class="nc" id="L1224">    	xAxis.setAutoRanging(false);</span>
+<span class="nc" id="L1225">    	NumberAxis yAxis = new NumberAxis();</span>
+    	
+
+<span class="nc" id="L1228">    	newlinechartB2 = new LineChart&lt;String, Number&gt;(xAxis, yAxis);</span>
+<span class="nc" id="L1229">		newlinechartB2.setTitle(&quot;Cumulative Confirmed COVID-19 Deaths (per 1M)&quot;);</span>
+<span class="nc" id="L1230">    	newlinechartB2.setLayoutX(33);</span>
+<span class="nc" id="L1231">    	newlinechartB2.setLayoutY(254);</span>
+<span class="nc" id="L1232">    	newlinechartB2.setPrefHeight(316.0);</span>
+<span class="nc" id="L1233">    	newlinechartB2.setPrefWidth(625.0);</span>
+<span class="nc" id="L1234">    	newlinechartB2.setCreateSymbols(false);</span>
+<span class="nc" id="L1235">    	anchorB2.getChildren().add(newlinechartB2);</span>
+    	
+<span class="nc bnc" id="L1237" title="All 2 branches missed.">    	for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L1238" title="All 2 branches missed.">    		if (CountriesB2[i].isSelected()) {</span>
+<span class="nc" id="L1239">    			XYChart.Series&lt;String, Number&gt; series = new XYChart.Series&lt;String, Number&gt;();</span>
+<span class="nc" id="L1240">    			float[] dataList = DataAnalysis.getDataList(dataset, CountriesB2[i].getText(), datepickerStartB2.getValue(), datepickerEndB2.getValue(), numRecord, &quot;total_deaths_per_million&quot;);</span>
+    			
+<span class="nc bnc" id="L1242" title="All 2 branches missed.">    			for (int j = 0; j &lt; numRecord; j++) {</span>
+    				
+<span class="nc bnc" id="L1244" title="All 2 branches missed.">    				if (dataList[j] == -1.0) {</span>
+<span class="nc" id="L1245">    					missing = true;</span>
+    				}
+    				else
+<span class="nc" id="L1248">    					series.getData().add(new XYChart.Data&lt;String, Number&gt;(dateList[j], dataList[j]));</span>
+    			}  
+    			
+<span class="nc" id="L1251">    			series.setName(CountriesB2[i].getText());</span>
+
+<span class="nc" id="L1253">    	    	newlinechartB2.getData().add(series);</span>
+<span class="nc bnc" id="L1254" title="All 2 branches missed.">    	    	if (missing == true) {</span>
+<span class="nc" id="L1255">    	    		ErrorMsgB2.setText(&quot;If a country/region line is missing, there is no data for selected range.&quot;);</span>
+    	    	}
+    		}
+    	}
+<span class="nc" id="L1259">    }</span>
+    
+    @FXML
+    void startdownloadB2(ActionEvent event) throws Exception
+    {
+<span class="nc" id="L1264">    	StartDateErrorMsgB2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1265">    	EndDateErrorMsgB2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1266">    	CountryErrorMsgB2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1267">    	ErrorMsgB2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1268">    	int numSelected = 0;</span>
+<span class="nc" id="L1269">    	anchorB2.getChildren().remove(newlinechartB2);</span>
+
+<span class="nc bnc" id="L1271" title="All 2 branches missed.">    	for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L1272" title="All 2 branches missed.">    		if (CountriesB2[i].isSelected()) {</span>
+<span class="nc" id="L1273">    			numSelected++;</span>
+    		}
+    	}
+    	
+<span class="nc bnc" id="L1277" title="All 2 branches missed.">    	if (datepickerStartB2.getValue() == null) {</span>
+<span class="nc" id="L1278">    		StartDateErrorMsgB2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+    		
+<span class="nc bnc" id="L1280" title="All 2 branches missed.">    		if (datepickerEndB2.getValue() == null) {</span>
+<span class="nc" id="L1281">    			EndDateErrorMsgB2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+    		}
+    		
+<span class="nc bnc" id="L1284" title="All 2 branches missed.">    		if (numSelected == 0) {</span>
+<span class="nc" id="L1285">    			CountryErrorMsgB2.setText(&quot;Please pick at least one country.&quot;);</span>
+    		}
+    		
+<span class="nc" id="L1288">    		return;</span>
+    	}
+    	
+<span class="nc bnc" id="L1291" title="All 2 branches missed.">		if (datepickerEndB2.getValue() == null) {</span>
+<span class="nc" id="L1292">			EndDateErrorMsgB2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+
+<span class="nc bnc" id="L1294" title="All 2 branches missed.">        	if (numSelected == 0)</span>
+<span class="nc" id="L1295">        		CountryErrorMsgB2.setText(&quot;Please pick at least one country.&quot;);</span>
+        		
+<span class="nc" id="L1297">        	return;</span>
+		}
+		
+<span class="nc bnc" id="L1300" title="All 2 branches missed.">		if (numSelected == 0) {</span>
+<span class="nc" id="L1301">			CountryErrorMsgB2.setText(&quot;Please pick at least one country.&quot;);</span>
+<span class="nc" id="L1302">			return;</span>
+		}
+    	
+<span class="nc" id="L1305">    	String startingDate = datepickerStartB2.getValue().format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc" id="L1306">    	String endingDate = datepickerEndB2.getValue().format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc" id="L1307">    	int numRecord = 0;</span>
+<span class="nc" id="L1308">		numRecord = DataAnalysis.getTotalNumRecord(&quot;COVID_Dataset_v1.0.csv&quot;, startingDate, endingDate);</span>
+<span class="nc" id="L1309">		String[] dateList = DataAnalysis.getDateList(&quot;COVID_Dataset_v1.0.csv&quot;, startingDate, endingDate, numRecord);</span>
+<span class="nc" id="L1310">    	Writer writer = null;</span>
+
+    	try {
+<span class="nc" id="L1313">    		File file = new File (&quot;..\\CumulativeConfirmedDeathsPer1M.csv&quot;);</span>
+<span class="nc" id="L1314">    		writer = new BufferedWriter(new FileWriter(file));</span>
+<span class="nc" id="L1315">    		writer.write(&quot;Country,Date,Cumulative Deaths (per 1M)\n&quot;);</span>
+<span class="nc bnc" id="L1316" title="All 2 branches missed.">    		for (int i = 0; i &lt; numCountries; i++){</span>
+<span class="nc bnc" id="L1317" title="All 2 branches missed.">	    		if (CountriesB2[i].isSelected()) {</span>
+<span class="nc" id="L1318">	    			float[] dataList = DataAnalysis.getDataList(dataset, CountriesB2[i].getText(), datepickerStartB2.getValue(), datepickerEndB2.getValue(), numRecord, &quot;total_deaths_per_million&quot;);</span>
+<span class="nc bnc" id="L1319" title="All 2 branches missed.">	    			for (int j = 0; j &lt; numRecord; j++) {</span>
+<span class="nc" id="L1320">	    				String text = CountriesB2[i].getText();</span>
+<span class="nc" id="L1321">	    				text = text + &quot;,&quot; + dateList[j];</span>
+	    				
+<span class="nc bnc" id="L1323" title="All 2 branches missed.">	    				if (dataList[j] != -1.0) {</span>
+<span class="nc" id="L1324">	    					text = text + &quot;,&quot; + dataList[j] + &quot;\n&quot;;</span>
+	    				}
+	    				else
+<span class="nc" id="L1327">	    					text = text + &quot;,NA\n&quot;;</span>
+	    				
+<span class="nc" id="L1329">	    				writer.write(text);</span>
+	    			}  		
+	    		}
+    		}
+<span class="nc bnc" id="L1333" title="All 2 branches missed.">    		if(Desktop.isDesktopSupported()) {</span>
+<span class="nc" id="L1334">        		Desktop d = Desktop.getDesktop();</span>
+<span class="nc" id="L1335">        		d.open(file);   			</span>
+    		}
+    	}
+    	
+<span class="nc" id="L1339">    	catch (Exception ex)</span>
+    	{
+<span class="nc" id="L1341">    		ex.printStackTrace();</span>
+    	}
+        finally 
+        {
+<span class="nc" id="L1345">            writer.flush();</span>
+<span class="nc" id="L1346">            writer.close();</span>
+        }
+    	
+    	//writeExcel();
+<span class="nc" id="L1350">    }</span>
+    
+    @FXML    
+    void clearB2(ActionEvent event) {
+<span class="nc" id="L1354">    	datepickerStartB2.setValue(null);</span>
+<span class="nc" id="L1355">    	datepickerEndB2.setValue(null);</span>
+<span class="nc" id="L1356">    	CountryErrorMsgB2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1357">    	StartDateErrorMsgB2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1358">    	EndDateErrorMsgB2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1359">    	ErrorMsgB2.setText(&quot;&quot;);</span>
+<span class="nc bnc" id="L1360" title="All 2 branches missed.">        for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L1361" title="All 2 branches missed.">    		  if (CountriesB2[i].isSelected()) {</span>
+<span class="nc" id="L1362">    			  CountriesB2[i].setSelected(false);</span>
+          }
+        }
+<span class="nc" id="L1365">        anchorB2.getChildren().remove(newlinechartB2);</span>
+<span class="nc bnc" id="L1366" title="All 2 branches missed.">    	if (newlinechartB2 != null)</span>
+<span class="nc" id="L1367">    		newlinechartB2.getData().clear();</span>
+<span class="nc" id="L1368">    }</span>
+
+    @FXML
+    void doShowResultC2(ActionEvent event) {
+<span class="nc" id="L1372">    	StartDateErrorMsgC2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1373">    	EndDateErrorMsgC2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1374">    	CountryErrorMsgC2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1375">    	ErrorMsgC2.setText(&quot;&quot;);    	</span>
+<span class="nc" id="L1376">    	anchorC2.getChildren().remove(newlinechartC2);</span>
+    	
+<span class="nc" id="L1378">    	int numSelected = 0;</span>
+<span class="nc" id="L1379">		LocalDate start = datepickerStartC2.getValue();</span>
+<span class="nc" id="L1380">		LocalDate end = datepickerEndC2.getValue();</span>
+
+<span class="nc bnc" id="L1382" title="All 2 branches missed.">    	for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L1383" title="All 2 branches missed.">    		if (CountriesC2[i].isSelected()) {</span>
+<span class="nc" id="L1384">    			numSelected++;</span>
+    		}
+    	}
+    	
+<span class="nc bnc" id="L1388" title="All 2 branches missed.">    	if (start == null) {</span>
+<span class="nc" id="L1389">    		StartDateErrorMsgC2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+    		
+<span class="nc bnc" id="L1391" title="All 6 branches missed.">    		if (end == null || end.isBefore(LocalDate.parse(&quot;2020-03-01&quot;)) || end.isAfter(LocalDate.parse(&quot;2021-07-20&quot;))) {</span>
+<span class="nc" id="L1392">    			EndDateErrorMsgC2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+    		}
+    		
+<span class="nc bnc" id="L1395" title="All 2 branches missed.">    		if (numSelected == 0) {</span>
+<span class="nc" id="L1396">    			CountryErrorMsgC2.setText(&quot;Please pick at least one country.&quot;);</span>
+    		}
+    		
+<span class="nc" id="L1399">    		return;</span>
+    	}
+    	
+<span class="nc bnc" id="L1402" title="All 4 branches missed.">    	if (start.isBefore(LocalDate.parse(&quot;2020-03-01&quot;)) || start.isAfter(LocalDate.parse(&quot;2021-07-20&quot;))) {</span>
+<span class="nc" id="L1403">    		StartDateErrorMsgC2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+       		
+<span class="nc bnc" id="L1405" title="All 6 branches missed.">    		if (end == null || end.isBefore(LocalDate.parse(&quot;2020-03-01&quot;)) || end.isAfter(LocalDate.parse(&quot;2021-07-20&quot;))) {</span>
+<span class="nc" id="L1406">    			EndDateErrorMsgC2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+    		}
+<span class="nc bnc" id="L1408" title="All 2 branches missed.">    		else if (end.isBefore(start)) {</span>
+<span class="nc" id="L1409">    			EndDateErrorMsgC2.setText(&quot;Ending date must come after starting date.&quot;);</span>
+    		}
+
+<span class="nc bnc" id="L1412" title="All 2 branches missed.">        	if (numSelected == 0)</span>
+<span class="nc" id="L1413">        		CountryErrorMsgC2.setText(&quot;Please pick at least one country.&quot;);</span>
+        		
+<span class="nc" id="L1415">        	return;</span>
+    	}
+    	
+<span class="nc bnc" id="L1418" title="All 6 branches missed.">		if (end == null || end.isBefore(LocalDate.parse(&quot;2020-03-01&quot;)) || end.isAfter(LocalDate.parse(&quot;2021-07-20&quot;))) {</span>
+<span class="nc" id="L1419">			EndDateErrorMsgC2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+
+<span class="nc bnc" id="L1421" title="All 2 branches missed.">        	if (numSelected == 0)</span>
+<span class="nc" id="L1422">        		CountryErrorMsgC2.setText(&quot;Please pick at least one country.&quot;);</span>
+        		
+<span class="nc" id="L1424">        	return;</span>
+		}
+<span class="nc bnc" id="L1426" title="All 2 branches missed.">		else if (end.isBefore(start)) {</span>
+<span class="nc" id="L1427">			EndDateErrorMsgC2.setText(&quot;Ending date must come after starting date&quot;);</span>
+        	
+<span class="nc bnc" id="L1429" title="All 2 branches missed.">        	if (numSelected == 0)</span>
+<span class="nc" id="L1430">        		CountryErrorMsgC2.setText(&quot;Please pick at least one country.&quot;);</span>
+        		
+<span class="nc" id="L1432">        	return;</span>
+		}
+		
+<span class="nc bnc" id="L1435" title="All 2 branches missed.">		if (numSelected == 0) {</span>
+<span class="nc" id="L1436">			CountryErrorMsgC2.setText(&quot;Please pick at least one country.&quot;);</span>
+<span class="nc" id="L1437">			return;</span>
+		}
+		
+<span class="nc" id="L1440">		numSelected = 0;</span>
+<span class="nc" id="L1441">    	String startingDate = datepickerStartC2.getValue().format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc" id="L1442">    	String endingDate = datepickerEndC2.getValue().format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc" id="L1443">    	int numRecord = 0;</span>
+<span class="nc" id="L1444">		boolean missing = false;</span>
+<span class="nc" id="L1445">		numRecord = DataAnalysis.getTotalNumRecord(dataset, startingDate, endingDate);</span>
+<span class="nc" id="L1446">		String[] dateList = DataAnalysis.getDateList(dataset, startingDate, endingDate, numRecord);</span>
+<span class="nc" id="L1447">    	CategoryAxis xAxis = new CategoryAxis();</span>
+<span class="nc" id="L1448">    	xAxis.setCategories(FXCollections.&lt;String&gt;observableArrayList(Arrays.asList(dateList))); </span>
+<span class="nc" id="L1449">    	xAxis.setAutoRanging(false);</span>
+<span class="nc" id="L1450">    	NumberAxis yAxis = new NumberAxis();</span>
+    	
+
+<span class="nc" id="L1453">    	newlinechartC2 = new LineChart&lt;String, Number&gt;(xAxis, yAxis);</span>
+<span class="nc" id="L1454">		newlinechartC2.setTitle(&quot;Cumulative Rate of Vaccination against COVID-19&quot;);</span>
+<span class="nc" id="L1455">    	newlinechartC2.setLayoutX(33);</span>
+<span class="nc" id="L1456">    	newlinechartC2.setLayoutY(254);</span>
+<span class="nc" id="L1457">    	newlinechartC2.setPrefHeight(316.0);</span>
+<span class="nc" id="L1458">    	newlinechartC2.setPrefWidth(625.0);</span>
+<span class="nc" id="L1459">    	newlinechartC2.setCreateSymbols(false);</span>
+<span class="nc" id="L1460">    	anchorC2.getChildren().add(newlinechartC2);</span>
+    	
+<span class="nc bnc" id="L1462" title="All 2 branches missed.">    	for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L1463" title="All 2 branches missed.">    		if (CountriesC2[i].isSelected()) {</span>
+<span class="nc" id="L1464">    			XYChart.Series&lt;String, Number&gt; series = new XYChart.Series&lt;String, Number&gt;();</span>
+<span class="nc" id="L1465">    			String country = CountriesC2[i].getText();</span>
+<span class="nc" id="L1466">    			String colName = &quot;people_fully_vaccinated_per_hundred&quot;;</span>
+    			
+<span class="nc" id="L1468">    			float[] dataList = DataAnalysis.getDataList(dataset, country, start, end, numRecord, colName);</span>
+    			
+<span class="nc bnc" id="L1470" title="All 2 branches missed.">    			for (int j = 0; j &lt; numRecord; j++) {</span>
+    				
+<span class="nc bnc" id="L1472" title="All 2 branches missed.">    				if (dataList[j] == -1.0) {</span>
+<span class="nc" id="L1473">    					missing = true;</span>
+    				} else {
+<span class="nc" id="L1475">    					series.getData().add(new XYChart.Data&lt;String, Number&gt;(dateList[j], dataList[j]));</span>
+    				}
+    			}  
+    			
+<span class="nc" id="L1479">    			series.setName(CountriesC2[i].getText());</span>
+
+<span class="nc" id="L1481">    	    	newlinechartC2.getData().add(series);</span>
+<span class="nc bnc" id="L1482" title="All 2 branches missed.">    	    	if (missing == true) {</span>
+<span class="nc" id="L1483">    	    		ErrorMsgC2.setText(&quot;If a country/region line is missing, there is no data for selected range.&quot;);</span>
+    	    	}
+    		}
+    	}
+<span class="nc" id="L1487">    }</span>
+    
+    @FXML
+    void startdownloadC2(ActionEvent event) throws Exception
+    {
+<span class="nc" id="L1492">    	StartDateErrorMsgC2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1493">    	EndDateErrorMsgC2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1494">    	CountryErrorMsgC2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1495">    	ErrorMsgC2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1496">    	int numSelected = 0;</span>
+<span class="nc" id="L1497">    	anchorC2.getChildren().remove(newlinechartC2);</span>
+
+<span class="nc bnc" id="L1499" title="All 2 branches missed.">    	for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L1500" title="All 2 branches missed.">    		if (CountriesC2[i].isSelected()) {</span>
+<span class="nc" id="L1501">    			numSelected++;</span>
+    		}
+    	}
+    	
+<span class="nc bnc" id="L1505" title="All 2 branches missed.">    	if (datepickerStartC2.getValue() == null) {</span>
+<span class="nc" id="L1506">    		StartDateErrorMsgC2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+    		
+<span class="nc bnc" id="L1508" title="All 2 branches missed.">    		if (datepickerEndC2.getValue() == null) {</span>
+<span class="nc" id="L1509">    			EndDateErrorMsgC2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+    		}
+    		
+<span class="nc bnc" id="L1512" title="All 2 branches missed.">    		if (numSelected == 0) {</span>
+<span class="nc" id="L1513">    			CountryErrorMsgC2.setText(&quot;Please pick at least one country.&quot;);</span>
+    		}
+    		
+<span class="nc" id="L1516">    		return;</span>
+    	}
+    	
+<span class="nc bnc" id="L1519" title="All 2 branches missed.">		if (datepickerEndC2.getValue() == null) {</span>
+<span class="nc" id="L1520">			EndDateErrorMsgC2.setText(&quot;Please pick a date between 1/3/2020 and 20/7/2021.&quot;);</span>
+
+<span class="nc bnc" id="L1522" title="All 2 branches missed.">        	if (numSelected == 0)</span>
+<span class="nc" id="L1523">        		CountryErrorMsgC2.setText(&quot;Please pick at least one country.&quot;);</span>
+        		
+<span class="nc" id="L1525">        	return;</span>
+		}
+		
+<span class="nc bnc" id="L1528" title="All 2 branches missed.">		if (numSelected == 0) {</span>
+<span class="nc" id="L1529">			CountryErrorMsgC2.setText(&quot;Please pick at least one country.&quot;);</span>
+<span class="nc" id="L1530">			return;</span>
+		}
+    	
+<span class="nc" id="L1533">    	String startingDate = datepickerStartC2.getValue().format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc" id="L1534">    	String endingDate = datepickerEndC2.getValue().format(DateTimeFormatter.ofPattern(&quot;M/d/yyyy&quot;));</span>
+<span class="nc" id="L1535">    	int numRecord = 0;</span>
+<span class="nc" id="L1536">		numRecord = DataAnalysis.getTotalNumRecord(&quot;COVID_Dataset_v1.0.csv&quot;, startingDate, endingDate);</span>
+<span class="nc" id="L1537">		String[] dateList = DataAnalysis.getDateList(&quot;COVID_Dataset_v1.0.csv&quot;, startingDate, endingDate, numRecord);</span>
+<span class="nc" id="L1538">    	Writer writer = null;</span>
+
+    	try {
+<span class="nc" id="L1541">    		File file = new File (&quot;..\\CumulativeRateOfVaccination.csv&quot;);</span>
+<span class="nc" id="L1542">    		writer = new BufferedWriter(new FileWriter(file));</span>
+<span class="nc" id="L1543">    		writer.write(&quot;Country,Date,Cumulative Rate of Vaccination\n&quot;);</span>
+<span class="nc bnc" id="L1544" title="All 2 branches missed.">    		for (int i = 0; i &lt; numCountries; i++){</span>
+<span class="nc bnc" id="L1545" title="All 2 branches missed.">	    		if (CountriesC2[i].isSelected()) {</span>
+<span class="nc" id="L1546">	    			float[] dataList = DataAnalysis.getDataList(dataset, CountriesC2[i].getText(), datepickerStartC2.getValue(), datepickerEndC2.getValue(), numRecord, &quot;people_fully_vaccinated_per_hundred&quot;);</span>
+<span class="nc bnc" id="L1547" title="All 2 branches missed.">	    			for (int j = 0; j &lt; numRecord; j++) {</span>
+<span class="nc" id="L1548">	    				String text = CountriesC2[i].getText();</span>
+<span class="nc" id="L1549">	    				text = text + &quot;,&quot; + dateList[j];</span>
+	    				
+<span class="nc bnc" id="L1551" title="All 2 branches missed.">	    				if (dataList[j] != -1.0) {</span>
+<span class="nc" id="L1552">	    					text = text + &quot;,&quot; + dataList[j] + &quot;\n&quot;;</span>
+	    				}
+	    				else
+<span class="nc" id="L1555">	    					text = text + &quot;,NA\n&quot;;</span>
+	    				
+<span class="nc" id="L1557">	    				writer.write(text);</span>
+	    			}  		
+	    		}
+    		}
+<span class="nc bnc" id="L1561" title="All 2 branches missed.">    		if(Desktop.isDesktopSupported()) {</span>
+<span class="nc" id="L1562">        		Desktop d = Desktop.getDesktop();</span>
+<span class="nc" id="L1563">        		d.open(file);   			</span>
+    		}
+    	}
+    	
+<span class="nc" id="L1567">    	catch (Exception ex)</span>
+    	{
+<span class="nc" id="L1569">    		ex.printStackTrace();</span>
+    	}
+        finally 
+        {
+<span class="nc" id="L1573">            writer.flush();</span>
+<span class="nc" id="L1574">            writer.close();</span>
+        }
+    	
+    	//writeExcel();
+<span class="nc" id="L1578">    }</span>
+    
+    @FXML    
+    void clearC2(ActionEvent event) {
+<span class="nc" id="L1582">    	datepickerStartC2.setValue(null);</span>
+<span class="nc" id="L1583">    	datepickerEndC2.setValue(null);</span>
+<span class="nc" id="L1584">    	CountryErrorMsgC2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1585">    	StartDateErrorMsgC2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1586">    	EndDateErrorMsgC2.setText(&quot;&quot;);</span>
+<span class="nc" id="L1587">    	ErrorMsgC2.setText(&quot;&quot;);</span>
+<span class="nc bnc" id="L1588" title="All 2 branches missed.">        for (int i = 0; i &lt; numCountries; i++) {</span>
+<span class="nc bnc" id="L1589" title="All 2 branches missed.">    		  if (CountriesC2[i].isSelected()) {</span>
+<span class="nc" id="L1590">    			  CountriesC2[i].setSelected(false);</span>
+          }
+        }
+<span class="nc" id="L1593">        anchorC2.getChildren().remove(newlinechartC2);</span>
+<span class="nc bnc" id="L1594" title="All 2 branches missed.">    	if (newlinechartC2 != null) {</span>
+<span class="nc" id="L1595">    		newlinechartC2.getData().clear();</span>
+    	}
+<span class="nc" id="L1597">    }</span>
+ 
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		
+		// Initialize A1 country lists
+<span class="nc bnc" id="L1603" title="All 2 branches missed.">		for (int i = 0; i &lt; countryList.length; i++) {</span>
+<span class="nc" id="L1604">			CustomMenuItem c = new CustomMenuItem();</span>
+<span class="nc" id="L1605">			CheckBox d = new CheckBox(countryList[i]);</span>
+<span class="nc" id="L1606">			c.setContent(d);</span>
+<span class="nc" id="L1607">			CountriesA1[i] = d;</span>
+<span class="nc" id="L1608">            menubuttonCountryA1.getItems().add(c);</span>
+        }
+		
+		// Initialize A2 country list
+<span class="nc bnc" id="L1612" title="All 2 branches missed.">		for (int i = 0; i &lt; countryList.length; i++) {</span>
+<span class="nc" id="L1613">			CustomMenuItem c = new CustomMenuItem();</span>
+<span class="nc" id="L1614">			CheckBox d = new CheckBox(countryList[i]);</span>
+<span class="nc" id="L1615">			c.setContent(d);</span>
+<span class="nc" id="L1616">			CountriesA2[i] = d;</span>
+<span class="nc" id="L1617">            menubuttonCountryA2.getItems().add(c);</span>
+        }
+		
+		// Initialize B1 country list
+<span class="nc bnc" id="L1621" title="All 2 branches missed.">		for (int i = 0; i &lt; countryList.length; i++) {</span>
+<span class="nc" id="L1622">			CustomMenuItem c = new CustomMenuItem();</span>
+<span class="nc" id="L1623">			CheckBox d = new CheckBox(countryList[i]);</span>
+<span class="nc" id="L1624">			c.setContent(d);</span>
+<span class="nc" id="L1625">			CountriesB1[i] = d;</span>
+<span class="nc" id="L1626">            menubuttonCountryB1.getItems().add(c);</span>
+        }
+		
+		// Initialize B2 country lists
+<span class="nc bnc" id="L1630" title="All 2 branches missed.">		for (int i = 0; i &lt; numCountries; i ++) {</span>
+<span class="nc" id="L1631">			CustomMenuItem c = new CustomMenuItem();</span>
+<span class="nc" id="L1632">			CheckBox d = new CheckBox(countryList[i]);</span>
+<span class="nc" id="L1633">			c.setContent(d);</span>
+<span class="nc" id="L1634">			CountriesB2[i] = d;</span>
+<span class="nc" id="L1635">			menubuttonCountryB2.getItems().add(c);</span>
+		}
+
+		// Initialize C1 country lists
+<span class="nc bnc" id="L1639" title="All 2 branches missed.">		for (int i = 0; i &lt; countryList.length; i++) {</span>
+<span class="nc" id="L1640">			CustomMenuItem c = new CustomMenuItem();</span>
+<span class="nc" id="L1641">			CheckBox d = new CheckBox(countryList[i]);</span>
+<span class="nc" id="L1642">			c.setContent(d);</span>
+<span class="nc" id="L1643">            CountriesC1[i] = d;</span>
+<span class="nc" id="L1644">            menubuttonCountryC1.getItems().add(c);</span>
+        }
+		
+		// Initialize C2 country lists
+<span class="nc bnc" id="L1648" title="All 2 branches missed.">		for (int i = 0; i &lt; countryList.length; i++) {</span>
+<span class="nc" id="L1649">			CustomMenuItem c = new CustomMenuItem();</span>
+<span class="nc" id="L1650">			CheckBox d = new CheckBox(countryList[i]);</span>
+<span class="nc" id="L1651">			c.setContent(d);</span>
+<span class="nc" id="L1652">            CountriesC2[i] = d;</span>
+<span class="nc" id="L1653">            menubuttonCountryC2.getItems().add(c);</span>
+        }
+
+		
+<span class="nc" id="L1657">		CountryColA1.setCellValueFactory(new PropertyValueFactory&lt;cases, String&gt;(&quot;Country&quot;));</span>
+<span class="nc" id="L1658">		totalCasesColA1.setCellValueFactory(new PropertyValueFactory&lt;cases, String&gt;(&quot;totalCases&quot;));</span>
+<span class="nc" id="L1659">		totalCasesPer1MColA1.setCellValueFactory(new PropertyValueFactory&lt;cases, String&gt;(&quot;totalCasesPer1M&quot;));	</span>
+		
+<span class="nc" id="L1661">		CountryColB1.setCellValueFactory(new PropertyValueFactory&lt;deaths, String&gt;(&quot;Country&quot;));</span>
+<span class="nc" id="L1662">		totalDeathsColB1.setCellValueFactory(new PropertyValueFactory&lt;deaths, String&gt;(&quot;totalDeaths&quot;));</span>
+<span class="nc" id="L1663">		totalDeathsPer1MColB1.setCellValueFactory(new PropertyValueFactory&lt;deaths, String&gt;(&quot;totalDeathsPer1M&quot;));</span>
+
+<span class="nc" id="L1665">		CountryColC1.setCellValueFactory(new PropertyValueFactory&lt;vaccinations, String&gt;(&quot;Country&quot;));</span>
+<span class="nc" id="L1666">		totalFullyVacColC1.setCellValueFactory(new PropertyValueFactory&lt;vaccinations, String&gt;(&quot;totalFullyVac&quot;));</span>
+<span class="nc" id="L1667">		totalFullyVacPer100ColC1.setCellValueFactory(new PropertyValueFactory&lt;vaccinations, String&gt;(&quot;totalFullyVacPer100&quot;));</span>
+
+<span class="nc" id="L1669">    	DateErrorMsgA1.setText(&quot;&quot;);</span>
+<span class="nc" id="L1670">    	CountryErrorMsgA1.setText(&quot;&quot;);</span>
+<span class="nc" id="L1671">    	TableDateA1.setText(&quot;Number of Confirmed COVID-19 Cases&quot;);</span>
+		
+<span class="nc" id="L1673">    	DateErrorMsgB1.setText(&quot;&quot;);</span>
+<span class="nc" id="L1674">    	CountryErrorMsgB1.setText(&quot;&quot;);</span>
+<span class="nc" id="L1675">    	TableDateB1.setText(&quot;Number of Confirmed COVID-19 Deaths&quot;);</span>
+    	
+<span class="nc" id="L1677">    	datepickerA1.setDayCellFactory(picker-&gt;new DateCell() {</span>
+    		public void updateItem(LocalDate date, boolean empty) {
+<span class="nc" id="L1679">    			super.updateItem(date,  empty);</span>
+<span class="nc" id="L1680">    			LocalDate lowerBound = LocalDate.parse(&quot;2020-03-01&quot;);</span>
+<span class="nc" id="L1681">    			LocalDate upperBound = LocalDate.parse(&quot;2021-07-20&quot;);</span>
+    			
+<span class="nc bnc" id="L1683" title="All 6 branches missed.">    			setDisable(empty || date.compareTo(lowerBound) &lt; 0 || date.compareTo(upperBound) &gt; 0);</span>
+<span class="nc" id="L1684">    		}</span>
+    	});
+    	
+<span class="nc" id="L1687">    	startingdatepickerA2.setDayCellFactory(picker-&gt;new DateCell() {</span>
+    		public void updateItem(LocalDate date, boolean empty) {
+<span class="nc" id="L1689">    			super.updateItem(date,  empty);</span>
+<span class="nc" id="L1690">    			LocalDate lowerBound = LocalDate.parse(&quot;2020-03-01&quot;);</span>
+<span class="nc" id="L1691">    			LocalDate upperBound = LocalDate.parse(&quot;2021-07-20&quot;);</span>
+<span class="nc bnc" id="L1692" title="All 2 branches missed.">    			if (endingdatepickerA2.getValue() != null)</span>
+<span class="nc" id="L1693">    				upperBound = endingdatepickerA2.getValue();</span>
+    			
+    			
+<span class="nc bnc" id="L1696" title="All 6 branches missed.">    			setDisable(empty || date.compareTo(lowerBound) &lt; 0 || date.compareTo(upperBound) &gt; 0);</span>
+<span class="nc" id="L1697">    		}</span>
+    	});
+    	
+<span class="nc" id="L1700">    	endingdatepickerA2.setDayCellFactory(picker-&gt;new DateCell() {</span>
+    		public void updateItem(LocalDate date, boolean empty) {
+<span class="nc" id="L1702">    			super.updateItem(date,  empty);</span>
+<span class="nc" id="L1703">    			LocalDate lowerBound = LocalDate.parse(&quot;2020-03-01&quot;);</span>
+<span class="nc" id="L1704">    			LocalDate upperBound = LocalDate.parse(&quot;2021-07-20&quot;);</span>
+<span class="nc bnc" id="L1705" title="All 2 branches missed.">    			if (startingdatepickerA2.getValue() != null)</span>
+<span class="nc" id="L1706">    				lowerBound = startingdatepickerA2.getValue();</span>
+    			
+    			
+<span class="nc bnc" id="L1709" title="All 6 branches missed.">    			setDisable(empty || date.compareTo(lowerBound) &lt; 0 || date.compareTo(upperBound) &gt; 0);</span>
+<span class="nc" id="L1710">    		}</span>
+    	});
+    	
+<span class="nc" id="L1713">    	datepickerB1.setDayCellFactory(picker-&gt;new DateCell() {</span>
+    		public void updateItem(LocalDate date, boolean empty) {
+<span class="nc" id="L1715">    			super.updateItem(date,  empty);</span>
+<span class="nc" id="L1716">    			LocalDate lowerBound = LocalDate.parse(&quot;2020-03-01&quot;);</span>
+<span class="nc" id="L1717">    			LocalDate upperBound = LocalDate.parse(&quot;2021-07-20&quot;);</span>
+    			
+<span class="nc bnc" id="L1719" title="All 6 branches missed.">    			setDisable(empty || date.compareTo(lowerBound) &lt; 0 || date.compareTo(upperBound) &gt; 0);</span>
+<span class="nc" id="L1720">    		}</span>
+    	});
+    	
+<span class="nc" id="L1723">    	datepickerStartB2.setDayCellFactory(picker-&gt;new DateCell() {</span>
+    		public void updateItem(LocalDate date, boolean empty) {
+<span class="nc" id="L1725">    			super.updateItem(date,  empty);</span>
+<span class="nc" id="L1726">    			LocalDate lowerBound = LocalDate.parse(&quot;2020-03-01&quot;);</span>
+<span class="nc" id="L1727">    			LocalDate upperBound = LocalDate.parse(&quot;2021-07-20&quot;);</span>
+<span class="nc bnc" id="L1728" title="All 2 branches missed.">    			if (datepickerEndB2.getValue() != null)</span>
+<span class="nc" id="L1729">    				upperBound = datepickerEndB2.getValue();</span>
+    			
+    			
+<span class="nc bnc" id="L1732" title="All 6 branches missed.">    			setDisable(empty || date.compareTo(lowerBound) &lt; 0 || date.compareTo(upperBound) &gt; 0);</span>
+<span class="nc" id="L1733">    		}</span>
+    	});
+    	
+<span class="nc" id="L1736">    	datepickerEndB2.setDayCellFactory(picker-&gt;new DateCell() {</span>
+    		public void updateItem(LocalDate date, boolean empty) {
+<span class="nc" id="L1738">    			super.updateItem(date,  empty);</span>
+<span class="nc" id="L1739">    			LocalDate lowerBound = LocalDate.parse(&quot;2020-03-01&quot;);</span>
+<span class="nc" id="L1740">    			LocalDate upperBound = LocalDate.parse(&quot;2021-07-20&quot;);</span>
+<span class="nc bnc" id="L1741" title="All 2 branches missed.">    			if (datepickerStartB2.getValue() != null)</span>
+<span class="nc" id="L1742">    				lowerBound = datepickerStartB2.getValue();</span>
+    			
+    			
+<span class="nc bnc" id="L1745" title="All 6 branches missed.">    			setDisable(empty || date.compareTo(lowerBound) &lt; 0 || date.compareTo(upperBound) &gt; 0);</span>
+<span class="nc" id="L1746">    		}</span>
+    	});
+    	
+<span class="nc" id="L1749">    	datepickerC1.setDayCellFactory(picker-&gt;new DateCell() {</span>
+    		public void updateItem(LocalDate date, boolean empty) {
+<span class="nc" id="L1751">    			super.updateItem(date,  empty);</span>
+<span class="nc" id="L1752">    			LocalDate lowerBound = LocalDate.parse(&quot;2020-03-01&quot;);</span>
+<span class="nc" id="L1753">    			LocalDate upperBound = LocalDate.parse(&quot;2021-07-20&quot;);</span>
+    			
+<span class="nc bnc" id="L1755" title="All 6 branches missed.">    			setDisable(empty || date.compareTo(lowerBound) &lt; 0 || date.compareTo(upperBound) &gt; 0);</span>
+<span class="nc" id="L1756">    		}</span>
+    	});
+    	
+<span class="nc" id="L1759">    	datepickerStartC2.setDayCellFactory(picker-&gt;new DateCell() {</span>
+    		public void updateItem(LocalDate date, boolean empty) {
+<span class="nc" id="L1761">    			super.updateItem(date,  empty);</span>
+<span class="nc" id="L1762">    			LocalDate lowerBound = LocalDate.parse(&quot;2020-03-01&quot;);</span>
+<span class="nc" id="L1763">    			LocalDate upperBound = LocalDate.parse(&quot;2021-07-20&quot;);</span>
+<span class="nc bnc" id="L1764" title="All 2 branches missed.">    			if (datepickerStartC2.getValue() != null)</span>
+<span class="nc" id="L1765">    				upperBound = datepickerEndC2.getValue();</span>
+    			
+<span class="nc bnc" id="L1767" title="All 6 branches missed.">    			setDisable(empty || date.compareTo(lowerBound) &lt; 0 || date.compareTo(upperBound) &gt; 0);</span>
+<span class="nc" id="L1768">    		}</span>
+    	});
+    	
+<span class="nc" id="L1771">    	datepickerEndC2.setDayCellFactory(picker-&gt;new DateCell() {</span>
+    		public void updateItem(LocalDate date, boolean empty) {
+<span class="nc" id="L1773">    			super.updateItem(date,  empty);</span>
+<span class="nc" id="L1774">    			LocalDate lowerBound = LocalDate.parse(&quot;2020-03-01&quot;);</span>
+<span class="nc" id="L1775">    			LocalDate upperBound = LocalDate.parse(&quot;2021-07-20&quot;);</span>
+<span class="nc bnc" id="L1776" title="All 2 branches missed.">    			if (datepickerEndC2.getValue() != null)</span>
+<span class="nc" id="L1777">    				lowerBound = datepickerStartC2.getValue();</span>
+    			
+<span class="nc bnc" id="L1779" title="All 6 branches missed.">    			setDisable(empty || date.compareTo(lowerBound) &lt; 0 || date.compareTo(upperBound) &gt; 0);</span>
+<span class="nc" id="L1780">    		}</span>
+    	});
+    	
+    	
+<span class="nc" id="L1784">	}</span>
+	
+   
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

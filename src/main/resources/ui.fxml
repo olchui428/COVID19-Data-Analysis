@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="581.0" prefWidth="691.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp3111.covid.Controller">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="437.0" prefWidth="719.0">
+      <children>
+            <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="679.0" prefWidth="719.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab fx:id="tabTaskZero" text="Task Zero">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="221.0" prefWidth="719.0">
+                           <children>
+                              <Label layoutX="114.0" layoutY="68.0" prefHeight="18.0" prefWidth="58.0" text="ISO Code" />
+                              <TextField fx:id="textfieldISO" layoutX="185.0" layoutY="64.0" prefHeight="26.0" prefWidth="43.0" promptText="e.g 1830 (18: yr 18-19; 30: Spring)" text="HKG" />
+                              <Button layoutX="303.0" layoutY="134.0" mnemonicParsing="false" text="Confirmed Deaths" />
+                              <Label layoutX="114.0" layoutY="36.0" text="Dataset" />
+                              <TextField fx:id="textfieldDataset" layoutX="185.0" layoutY="32.0" prefHeight="26.0" prefWidth="149.0" text="COVID_Dataset_v1.0.csv" />
+                              <Label layoutX="114.0" layoutY="138.0" text="Report" />
+                              <Button layoutX="423.0" layoutY="134.0" mnemonicParsing="false" text="Rate of Vaccination" />
+                              <Button fx:id="buttonConfirmedCases" layoutX="185.0" layoutY="134.0" mnemonicParsing="false" text="Confirmed Cases" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab fx:id="tabReport1" text="Table A">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="719.0">
+                           <children>
+                              <Label layoutX="71.0" layoutY="97.0" text="Date of Interest" />
+                              <Button fx:id="buttonShowResultA1" layoutX="204.0" layoutY="166.0" mnemonicParsing="false" onAction="#doShowResultA1" text="Show Result" />
+                              <MenuButton fx:id="menubuttonCountryA1" layoutX="204.0" layoutY="128.0" mnemonicParsing="false" text="Select countries" />
+                              <Label layoutX="71.0" layoutY="132.0" text="Countries of Interest" />
+                              <Label alignment="CENTER" layoutX="162.0" layoutY="22.0" text="Task A1: Confirmed COVID-19 Cases Table" textFill="#020af5">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font></Label>
+                              <DatePicker fx:id="datepickerA1" layoutX="204.0" layoutY="93.0" promptText="Enter or select date" />
+                              <TableView fx:id="tableA1" layoutX="73.0" layoutY="234.0" prefHeight="200.0" prefWidth="509.0">
+                                 <columns>
+                                    <TableColumn fx:id="CountryColA1" prefWidth="220.66669464111328" style="-fx-alignment: CENTER;" text="Country" />
+                                    <TableColumn fx:id="totalCasesColA1" prefWidth="139.33331298828125" style="-fx-alignment: CENTER;" text="Total Cases" />
+                                    <TableColumn fx:id="totalCasesPer1MColA1" prefWidth="149.33328247070312" style="-fx-alignment: CENTER;" text="Total Cases (per 1M)" />
+                                 </columns>
+                              </TableView>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#87b9e8" height="27.0" layoutX="73.0" layoutY="207.0" stroke="BLACK" strokeType="INSIDE" width="510.0" />
+                              <Button fx:id="buttonClearA1" layoutX="473.0" layoutY="166.0" mnemonicParsing="false" onAction="#clearA1" text="Clear Selection" />
+                              <Button fx:id="dowloaddataA1" layoutX="310.0" layoutY="166.0" mnemonicParsing="false" onAction="#startdownloadA1" text="Download Data as CSV" />
+                              <Text fx:id="DateErrorMsgA1" fill="RED" layoutX="401.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Text fx:id="CountryErrorMsgA1" fill="RED" layoutX="339.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Text layoutX="71.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a date between 1/3/2020 and 20/7/2021:" />
+                              <Text fx:id="TableDateA1" layoutX="89.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="478.681640625">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                <Tab fx:id="tabReport2" text="Table B">
+                  <content>
+                        <AnchorPane>
+                           <children>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="722.0">
+                                 <children>
+                                    <TableView fx:id="tableB1" editable="true" layoutX="73.0" layoutY="234.0" prefHeight="200.0" prefWidth="509.0">
+                                       <columns>
+                                          <TableColumn fx:id="CountryColB1" prefWidth="220.66669464111328" style="-fx-alignment: CENTER;" text="Country" />
+                                          <TableColumn fx:id="totalDeathsColB1" prefWidth="139.33331298828125" style="-fx-alignment: CENTER;" text="Total Deaths" />
+                                          <TableColumn fx:id="totalDeathsPer1MColB1" prefWidth="149.33328247070312" style="-fx-alignment: CENTER;" text="Total Death (per 1M)" />
+                                       </columns>
+                                    </TableView>
+                                    <MenuButton fx:id="menubuttonCountryB1" layoutX="204.0" layoutY="128.0" mnemonicParsing="false" text="Select Countries">                                      
+                                    </MenuButton>
+                                    <DatePicker fx:id="datepickerB1" layoutX="204.0" layoutY="93.0" promptText="Enter or select date" />
+                                    <Button fx:id="buttonShowResultB1" layoutX="204.0" layoutY="166.0" mnemonicParsing="false" onAction="#doShowResultB1" text="Show Result" />
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#87b9e8" height="27.0" layoutX="73.0" layoutY="207.0" stroke="BLACK" strokeType="INSIDE" width="510.0" />
+                                    <Text fx:id="TableDateB1" layoutX="89.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="478.681640625">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="DateErrorMsgB1" fill="RED" layoutX="401.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                    <Text fx:id="CountryErrorMsgB1" fill="RED" layoutX="339.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                    <Label layoutX="162.0" layoutY="22.0" text="Task B1: Confirmed COVID-19 Deaths Table" textFill="#020af5">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="dowloaddataB1" layoutX="310.0" layoutY="166.0" mnemonicParsing="false" onAction="#startdownloadB1" text="Download Data as CSV" />
+                                    <Button fx:id="buttonClearB1" layoutX="473.0" layoutY="166.0" mnemonicParsing="false" onAction="#clearB1" text="Clear Selection" />
+                                 </children>
+                                 </AnchorPane>
+                              <Label layoutX="71.0" layoutY="97.0" text="Date of Interest" />
+                              <Label layoutX="71.0" layoutY="132.0" text="Countries of Interest" />
+                              <Text layoutX="71.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a date between 1/3/2020 and 20/7/2021:" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab fx:id="tabReport3" text="Table C">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="719.0">
+                         <children>
+                            <Text layoutX="71.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a date between 1/3/2020 and 20/7/2021:" />
+                            <Text fx:id="DateErrorMsgC1" fill="RED" layoutX="401.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                            <Text fx:id="CountryErrorMsgC1" fill="RED" layoutX="339.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                    
+                            <Label layoutX="71.0" layoutY="97.0" text="Date of Interest" />
+                            <Button fx:id="buttonShowResultC1" layoutX="204.0" layoutY="166.0" mnemonicParsing="false" onAction="#doShowResultC1" text="Show Result" />
+                            <MenuButton fx:id="menubuttonCountryC1" layoutX="204.0" layoutY="128.0" mnemonicParsing="false" text="Select Countries" />
+                            <Label layoutX="71.0" layoutY="132.0" text="Countries of Interest" />
+                            <Label layoutX="158.0" layoutY="24.0" text="Task C1: Rate of Vaccination against COVID-19 Table" textFill="#020af5">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font></Label>
+                            <DatePicker fx:id="datepickerC1" layoutX="204.0" layoutY="93.0" promptText="Enter or select date" />
+                            <TableView fx:id="tableC1" layoutX="73.0" layoutY="234.0" prefHeight="200.0" prefWidth="509.0">
+                               <columns>
+                                  <TableColumn fx:id="CountryColC1" prefWidth="220.66669464111328" style="-fx-alignment: CENTER;" text="Country" />
+                                  <TableColumn fx:id="totalFullyVacColC1" prefWidth="139.33331298828125" style="-fx-alignment: CENTER;" text="Fully Vaccinated" />
+                                  <TableColumn fx:id="totalFullyVacPer100ColC1" prefWidth="149.33328247070312" style="-fx-alignment: CENTER;" text="Rate of Vaccination (%)" />
+                               </columns>
+                            </TableView>
+                            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#87b9e8" height="27.0" layoutX="73.0" layoutY="207.0" stroke="BLACK" strokeType="INSIDE" width="510.0" />
+                            <Text fx:id="TableDateC1" layoutX="89.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rate of Vaccination against COVID-19" textAlignment="CENTER" wrappingWidth="478.681640625">
+                               <font>
+                                  <Font name="System Bold" size="16.0" />
+                               </font>
+                            </Text>
+                         	<Button fx:id="buttonClearC1" layoutX="473.0" layoutY="166.0" mnemonicParsing="false" onAction="#clearC1" text="Clear Selection" />
+                            <Button fx:id="dowloaddataC1" layoutX="310.0" layoutY="166.0" mnemonicParsing="false" onAction="#startdownloadC1" text="Download Data as CSV" />
+                         </children>
+                      </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab fx:id="tabApp1" text="Chart A">
+                    <content>
+                      <AnchorPane fx:id="anchorA2" minHeight="0.0" minWidth="0.0" prefHeight="412.0" prefWidth="719.0">
+                           <children>
+                              <Label layoutX="396.0" layoutY="97.0" text="Countries of Interest" />
+                              <MenuButton fx:id="menubuttonCountryA2" layoutX="526.0" layoutY="93.0" mnemonicParsing="false" text="Select Countries">
+                              </MenuButton>
+                              <Button fx:id="buttonShowResultA2" layoutX="162.0" layoutY="191.0" mnemonicParsing="false" onAction="#doShowResultA2" text="Show Result" />
+                              <Label layoutX="71.0" layoutY="97.0" text="Starting Date" />
+                              <DatePicker fx:id="startingdatepickerA2" layoutX="162.0" layoutY="93.0" promptText="Enter or select date" />
+                              <Label layoutX="71.0" layoutY="144.0" text="Ending Date" />
+                              <DatePicker fx:id="endingdatepickerA2" layoutX="162.0" layoutY="140.0" promptText="Enter or select date" />
+                              <Label layoutX="91.0" layoutY="22.0" text="Task A2: Cumulative Confirmed COVID-19 Cases (per 1M) Chart" textFill="#020af5">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="dowloaddataA2" layoutX="268.0" layoutY="191.0" mnemonicParsing="false" onAction="#startdownloadA2" text="Download Data as CSV" />
+                              <Button fx:id="buttonClearA2" layoutX="431.0" layoutY="191.0" mnemonicParsing="false" onAction="#clearA2" text="Clear Selection" />
+                              <Text layoutX="71.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a period between 1/3/2020 and 20/7/2021:" />
+                              <Text fx:id="StartDateErrorMsgA2" fill="RED" layoutX="162.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Text fx:id="EndDateErrorMsgA2" fill="RED" layoutX="162.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Text fx:id="CountryErrorMsgA2" fill="RED" layoutX="526.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Text fx:id="ErrorMsgA2" layoutX="33.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab fx:id="tabApp2" text="Chart B">
+                    <content>
+                      <AnchorPane fx:id="anchorB2" minHeight="0.0" minWidth="0.0" prefHeight="685.0" prefWidth="719.0">
+                           <children>
+                              <Label layoutX="71.0" layoutY="97.0" text="Starting Date" />
+                              <Label layoutX="71.0" layoutY="144.0" text="Ending Date" />
+                              <Label layoutX="396.0" layoutY="97.0" text="Countries of Interest" />
+                              <MenuButton fx:id="menubuttonCountryB2" layoutX="526.0" layoutY="93.0" mnemonicParsing="false" text="Select Countries">
+                              </MenuButton>
+                              <Button fx:id="buttonShowResultB2" layoutX="162.0" layoutY="191.0" mnemonicParsing="false" onAction="#doShowResultB2" text="Show Result" />
+                              <DatePicker fx:id="datepickerStartB2" layoutX="162.0" layoutY="93.0" promptText="Enter or select date" />
+                              <DatePicker fx:id="datepickerEndB2" layoutX="162.0" layoutY="140.0" promptText="Enter or select date" />
+                              <Text fx:id="StartDateErrorMsgB2" fill="RED" layoutX="162.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Text fx:id="EndDateErrorMsgB2" fill="RED" layoutX="162.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Text fx:id="CountryErrorMsgB2" fill="RED" layoutX="526.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="192.06121826171875" />
+                              <Label layoutX="91.0" layoutY="22.0" text="Task B2: Cumulative Confirmed COVID-19 (per 1M) Deaths Chart" textFill="#020af5">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="ErrorMsgB2" layoutX="33.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Button fx:id="buttonClearB2" layoutX="431.0" layoutY="191.0" mnemonicParsing="false" onAction="#clearB2" text="Clear Selection" />
+                              <Text layoutX="71.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a period between 1/3/2020 and 20/7/2021:" />
+                              <Button fx:id="dowloaddataB2" layoutX="268.0" layoutY="191.0" mnemonicParsing="false" onAction="#startdownloadB2" text="Download Data as CSV" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab fx:id="tabApp3" text="Chart C">
+                    <content>
+                      <AnchorPane fx:id="anchorC2" minHeight="0.0" minWidth="0.0" prefHeight="620.0" prefWidth="719.0">
+                           <children>
+                              <Button fx:id="buttonShowResultC2" layoutX="162.0" layoutY="191.0" mnemonicParsing="false" onAction="#doShowResultC2" text="Show Result" />
+                              <MenuButton fx:id="menubuttonCountryC2" layoutX="526.0" layoutY="93.0" mnemonicParsing="false" text="Select Countries" />
+                              <Label layoutX="396.0" layoutY="97.0" text="Countries of Interest" />
+                              <Label layoutX="71.0" layoutY="97.0" text="Starting Date" />
+                              <DatePicker fx:id="datepickerStartC2" layoutX="162.0" layoutY="93.0" promptText="Enter or select date" />
+                              <Label layoutX="71.0" layoutY="144.0" text="Ending Date" />
+                              <DatePicker fx:id="datepickerEndC2" layoutX="162.0" layoutY="140.0" promptText="Enter or select date" />
+                              <Text fx:id="StartDateErrorMsgC2" fill="RED" layoutX="162.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Text fx:id="EndDateErrorMsgC2" fill="RED" layoutX="162.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Text fx:id="CountryErrorMsgC2" fill="RED" layoutX="526.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="192.06121826171875" />
+                              <Label layoutX="157.0" layoutY="22.0" text="Task C2: Rate of Vaccination against COVID-19 Chart" textFill="#020af5">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="ErrorMsgC2" layoutX="33.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Button fx:id="buttonClearC2" layoutX="431.0" layoutY="191.0" mnemonicParsing="false" onAction="#clearC2" text="Clear Selection" />
+                              <Text layoutX="71.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a period between 1/3/2020 and 20/7/2021:" />
+                              <Button fx:id="dowloaddataC2" layoutX="268.0" layoutY="191.0" mnemonicParsing="false" onAction="#startdownloadC2" text="Download Data as CSV" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>

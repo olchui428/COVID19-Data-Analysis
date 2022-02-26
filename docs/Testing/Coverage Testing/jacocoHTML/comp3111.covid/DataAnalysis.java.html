@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataAnalysis.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">deCOVID</a> &gt; <a href="index.source.html" class="el_package">comp3111.covid</a> &gt; <span class="el_source">DataAnalysis.java</span></div><h1>DataAnalysis.java</h1><pre class="source lang-java linenums">package comp3111.covid;
+
+import org.apache.commons.csv.*;
+import edu.duke.*;
+import java.util.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
+/**
+ * 
+ * Data Explorer on COVID-19
+ * @author &lt;a href=mailto:namkiu@ust.hk&gt;Namkiu Chan&lt;/a&gt;
+ * @version	1.1
+ * 
+ */
+<span class="nc" id="L20">public class DataAnalysis {</span>
+ 
+	public static CSVParser getFileParser(String dataset) {
+<span class="fc" id="L23">	     FileResource fr = new FileResource(&quot;dataset/&quot; + dataset);</span>
+<span class="fc" id="L24">	     return fr.getCSVParser(true);</span>
+		}
+	
+	public static String[] getCountryList(String dataset, int num) {
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">		boolean all = num == 0 ? true : false;</span>
+<span class="pc bpc" id="L29" title="1 of 2 branches missed.">		int adj_num = all ? 231 : num;</span>
+		
+<span class="fc" id="L31">		String[] countries = new String[adj_num];</span>
+<span class="fc" id="L32">		int i = 0;</span>
+		
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">		for (CSVRecord rec : getFileParser(dataset)) {</span>
+<span class="pc bpc" id="L35" title="1 of 4 branches missed.">			if (!all &amp;&amp; i &gt;= num) {</span>
+<span class="fc" id="L36">				break;</span>
+			}
+<span class="fc" id="L38">			String s = rec.get(&quot;countries&quot;);</span>
+<span class="fc" id="L39">			countries[i] = s;</span>
+<span class="fc" id="L40">			i++;</span>
+<span class="fc" id="L41">		}</span>
+<span class="fc" id="L42">		return countries;</span>
+	}
+	
+	public static int getTotalNumRecord(String dataset, String startingDate, String endingDate) {
+<span class="fc" id="L46">		int totalNumRecord = 0;</span>
+<span class="fc" id="L47">		boolean started = false;</span>
+		
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		for (CSVRecord rec : getFileParser(dataset)) {</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">			if (rec.get(&quot;date&quot;).equals(startingDate)) {</span>
+<span class="fc" id="L51">				started = true; </span>
+			}
+			
+<span class="fc bfc" id="L54" title="All 2 branches covered.">			if (rec.get(&quot;date&quot;).equals(endingDate)) {</span>
+<span class="fc" id="L55">				totalNumRecord++;</span>
+<span class="fc" id="L56">				break;</span>
+			}
+				
+<span class="fc bfc" id="L59" title="All 2 branches covered.">			if (started == true)</span>
+<span class="fc" id="L60">				totalNumRecord++;</span>
+<span class="fc" id="L61">		}</span>
+		
+<span class="fc" id="L63">		return totalNumRecord;</span>
+	}
+	
+	public static String[] getDateList(String dataset, String startingDate, String endingDate, int numRecord) {
+<span class="fc" id="L67">		String[] dateList = new String[numRecord];</span>
+<span class="fc" id="L68">		boolean started = false;</span>
+<span class="fc" id="L69">		int i = 0;</span>
+		
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		for (CSVRecord rec : getFileParser(dataset)) {</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">			if (rec.get(&quot;date&quot;).equals(startingDate)) { </span>
+<span class="fc" id="L73">				started = true; </span>
+			}
+			
+<span class="fc bfc" id="L76" title="All 2 branches covered.">			if (rec.get(&quot;date&quot;).equals(endingDate)) {</span>
+<span class="fc" id="L77">				dateList[i] = rec.get(&quot;date&quot;);</span>
+<span class="fc" id="L78">				break;</span>
+			}
+				
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			if (started == true) {</span>
+<span class="fc" id="L82">				dateList[i] = rec.get(&quot;date&quot;);</span>
+<span class="fc" id="L83">				i++;</span>
+			}
+<span class="fc" id="L85">		}</span>
+
+<span class="fc" id="L87">		return dateList;</span>
+	}
+	
+	public static float[] getDataList(String dataset, String Country, LocalDate startingDate, LocalDate endingDate, int numRecord, String column) {
+<span class="fc" id="L91">		float[] dataList = new float[numRecord];</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		for (int i = 0; i &lt; numRecord; i++) {</span>
+<span class="fc" id="L93">			dataList[i] = -1;</span>
+		}
+//		ChronoUnit.DAYS.between(startingDate, endingDate);
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		for (CSVRecord rec : getFileParser(dataset)) {</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">			if (rec.get(&quot;location&quot;).equals(Country)) {</span>
+<span class="fc" id="L98">				LocalDate currentDate = LocalDate.now();</span>
+				try {
+<span class="fc" id="L100">					currentDate = new SimpleDateFormat(&quot;M/d/yyyy&quot;).parse(rec.get(&quot;date&quot;)).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();</span>
+<span class="nc" id="L101">				} catch (ParseException e) {</span>
+					// TODO Auto-generated catch block
+<span class="nc" id="L103">					e.printStackTrace();</span>
+<span class="fc" id="L104">				}</span>
+<span class="fc bfc" id="L105" title="All 8 branches covered.">				if (currentDate.isEqual(startingDate) || currentDate.isEqual(endingDate) || currentDate.isAfter(startingDate) &amp;&amp; currentDate.isBefore(endingDate)) {</span>
+<span class="fc" id="L106">					String s = rec.get(column);</span>
+<span class="fc" id="L107">					int index = (int) ChronoUnit.DAYS.between(startingDate, currentDate);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">					if (!s.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L109">						dataList[index] = Float.parseFloat(s);</span>
+					} else {
+<span class="fc" id="L111">						dataList[index] = -1;</span>
+					}
+				}	
+			}
+<span class="fc" id="L115">		}</span>
+		
+<span class="fc" id="L117">		return dataList;</span>
+	}
+	
+	 public static long getConfirmedCasesA1(String dataset, String Country, String date) {
+<span class="fc" id="L121">			long confirmedCases = -1;</span>
+			
+<span class="fc bfc" id="L123" title="All 2 branches covered.">			for (CSVRecord rec : getFileParser(dataset)) {</span>
+<span class="fc bfc" id="L124" title="All 4 branches covered.">				if(rec.get(&quot;location&quot;).equals(Country) &amp;&amp; rec.get(&quot;date&quot;).equals(date)) {</span>
+<span class="fc" id="L125">					String s = rec.get(&quot;total_cases&quot;);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">					if (!s.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L127">						confirmedCases = Long.parseLong(s);</span>
+					}
+					break;
+				}
+<span class="fc" id="L131">			}</span>
+			
+<span class="fc" id="L133">			return confirmedCases;</span>
+	 }
+	 
+	public static float getConfirmedCasesPer1MA1(String dataset, String Country, String date) {
+<span class="fc" id="L137">			float confirmedCasesPer1M = -1;</span>
+			
+<span class="fc bfc" id="L139" title="All 2 branches covered.">			for (CSVRecord rec : getFileParser(dataset)) {</span>
+<span class="fc bfc" id="L140" title="All 4 branches covered.">				if (rec.get(&quot;location&quot;).equals(Country) &amp;&amp; rec.get(&quot;date&quot;).equals(date)) {</span>
+<span class="fc" id="L141">					String s = rec.get(&quot;total_cases_per_million&quot;);</span>
+
+<span class="fc bfc" id="L143" title="All 2 branches covered.">					if (!s.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L144">						confirmedCasesPer1M = Float.parseFloat(s);				</span>
+					}
+					
+					break;
+				}			
+<span class="fc" id="L149">			}</span>
+			
+<span class="fc" id="L151">			return confirmedCasesPer1M;			</span>
+	 }
+	
+	 public static long getConfirmedDeaths(String dataset, String Country, String date) {
+<span class="fc" id="L155">			long confirmedDeaths = -1;</span>
+			
+<span class="fc bfc" id="L157" title="All 2 branches covered.">			for (CSVRecord rec : getFileParser(dataset)) {</span>
+<span class="fc bfc" id="L158" title="All 4 branches covered.">				if (rec.get(&quot;location&quot;).equals(Country) &amp;&amp; rec.get(&quot;date&quot;).equals(date)) {</span>
+<span class="fc" id="L159">					String s = rec.get(&quot;total_deaths&quot;);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">					if (!s.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L161">						confirmedDeaths = Long.parseLong(s);</span>
+					}
+					break;
+				}	
+				
+<span class="fc" id="L166">			}</span>
+
+<span class="fc" id="L168">			return confirmedDeaths;</span>
+	 }
+
+	public static float getConfirmedDeathsPer1M(String dataset, String Country, String date) {
+<span class="fc" id="L172">		float confirmedDeathsPer1M = -1;</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">		for (CSVRecord rec : getFileParser(dataset)) {</span>
+<span class="fc bfc" id="L174" title="All 4 branches covered.">			if (rec.get(&quot;location&quot;).equals(Country) &amp;&amp; rec.get(&quot;date&quot;).equals(date)) {</span>
+<span class="fc" id="L175">				String s = rec.get(&quot;total_deaths_per_million&quot;);</span>
+
+<span class="fc bfc" id="L177" title="All 2 branches covered.">				if (!s.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L178">					confirmedDeathsPer1M = Float.parseFloat(s);				</span>
+				}
+				
+				break;
+			}			
+<span class="fc" id="L183">		}</span>
+		
+<span class="fc" id="L185">		return confirmedDeathsPer1M;</span>
+	 }
+	 
+	public static long getTotalFullyVac(String dataset, String Country, String date) {
+<span class="fc" id="L189">			long fullVac = -1;</span>
+			
+<span class="fc bfc" id="L191" title="All 2 branches covered.">			for (CSVRecord rec : getFileParser(dataset)) {</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">				if (rec.get(&quot;location&quot;).equals(Country)) {</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">					if (rec.get(&quot;date&quot;).equals(date)) {</span>
+<span class="fc" id="L194">						String s = rec.get(&quot;people_fully_vaccinated&quot;);</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">						if (!s.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L196">							fullVac = Long.parseLong(s);</span>
+<span class="fc" id="L197">							break;</span>
+						}
+					}
+				}		
+<span class="fc" id="L201">			}</span>
+			
+<span class="fc" id="L203">			return fullVac;</span>
+	 }
+	 
+	public static float getTotalFullyVacPer100(String dataset, String Country, String date) {
+<span class="fc" id="L207">			float fullVac = -1;</span>
+			
+<span class="fc bfc" id="L209" title="All 2 branches covered.">			for (CSVRecord rec : getFileParser(dataset)) {</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">				if (rec.get(&quot;location&quot;).equals(Country)) {</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">					if (rec.get(&quot;date&quot;).equals(date)) {</span>
+<span class="fc" id="L212">						String s = rec.get(&quot;people_fully_vaccinated_per_hundred&quot;);</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">						if (!s.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L214">							fullVac = Float.parseFloat(s);</span>
+<span class="fc" id="L215">							break;</span>
+						}
+					}
+				}		
+<span class="fc" id="L219">			}</span>
+			
+<span class="fc" id="L221">			return fullVac;</span>
+	 }
+ 
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
